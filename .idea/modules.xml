@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CSEDesignCompetition.iml" filepath="$PROJECT_DIR$/CSEDesignCompetition.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle_main.iml" group="Gradle" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle_test.iml" group="Gradle" />
     </modules>
   </component>
 </project>

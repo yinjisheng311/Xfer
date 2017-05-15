@@ -36,5 +36,5 @@ public class AlertBox {
         window.showAndWait(); //before it goes back, it needs to be closed
     }
 
-    
+
 }

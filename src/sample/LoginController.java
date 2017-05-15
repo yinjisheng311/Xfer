@@ -1,6 +1,7 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
@@ -10,23 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class LoginController implements Initializable {
     @FXML
     private JFXPasswordField password;
 
@@ -38,6 +30,8 @@ public class Controller implements Initializable {
 
     @FXML
     private JFXTextField username;
+
+
 
 
     @FXML
@@ -62,28 +56,24 @@ public class Controller implements Initializable {
         }
     }
 
-    public void loginButtonClicked(){
-        System.out.println("whatever");
-    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
-    @FXML
-    private void handleDragOver(DragEvent event){
-        //got the plus sign when you hover over it
-        //only if it is a file, not html etc
-        if(event.getDragboard().hasFiles()){
-            event.acceptTransferModes(TransferMode.ANY);
-        }
-
-    }
-    @FXML
-    private void handleDrop(DragEvent event) throws FileNotFoundException {
-        List<File> files = event.getDragboard().getFiles();
-        Image img = new Image(new FileInputStream(files.get(0)));
-
-    }
+//    @FXML
+//    private void handleDragOver(DragEvent event){
+//        //got the plus sign when you hover over it
+//        //only if it is a file, not html etc
+//        if(event.getDragboard().hasFiles()){
+//            event.acceptTransferModes(TransferMode.ANY);
+//        }
+//
+//    }
+//    @FXML
+//    private void handleDrop(DragEvent event) throws FileNotFoundException {
+//        List<File> files = event.getDragboard().getFiles();
+//        Image img = new Image(new FileInputStream(files.get(0)));
+//
+//    }
 }

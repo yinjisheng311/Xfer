@@ -33,7 +33,7 @@ public class HomeController implements Initializable {
         for (int i = 0; i < 4; i++){
             try {
                 Label lbl = new Label("Item" + i);
-                lbl.setGraphic(new ImageView(new Image(new FileInputStream("/Users/G/IdeaProjects/CSEDesignCompetition/src/sample/shield.png"))));
+//                lbl.setGraphic(new ImageView(new Image(new FileInputStream("/Users/G/IdeaProjects/CSEDesignCompetition/src/sample/shield.png"))));
                 this.listView.getItems().add(lbl);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -43,5 +43,12 @@ public class HomeController implements Initializable {
 
 
     }
+    @FXML
+    public void userSelected(ActionEvent event){
+        System.out.println(event.getEventType().getName());
+        System.out.println(this.listView.getSelectionModel().getSelectedItem().toString());
+    }
+
+
 
 }

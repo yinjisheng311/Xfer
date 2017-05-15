@@ -51,12 +51,12 @@
       </HBox>
    </bottom>
    <left>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </left>
    <right>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <JFXListView fx:id="listView" BorderPane.alignment="CENTER" />
+      <JFXListView fx:id="listView" onMouseClicked="#userSelected" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

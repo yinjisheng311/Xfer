@@ -57,6 +57,10 @@
       <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <JFXListView fx:id="listView" onMouseClicked="#userSelected" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXListView />
+         </children>
+      </VBox>
    </center>
 </BorderPane>

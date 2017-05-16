@@ -12,6 +12,8 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel>
+      <module name="CSE-Design-Competition-Gradle_main" target="1.8" />
+      <module name="CSE-Design-Competition-Gradle_test" target="1.8" />
       <module name="Gradle_main" target="1.8" />
       <module name="Gradle_test" target="1.8" />
     </bytecodeTargetLevel>

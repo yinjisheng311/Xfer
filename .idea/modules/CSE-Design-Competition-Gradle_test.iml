@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Gradle_main" />
+    <orderEntry type="module" module-name="CSE-Design-Competition-Gradle_main" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-admin:4.1.7" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.22.0" level="project" />

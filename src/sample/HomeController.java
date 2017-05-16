@@ -43,11 +43,7 @@ public class HomeController implements Initializable {
 
 
     }
-    @FXML
-    public void userSelected(ActionEvent event){
-        System.out.println(event.getEventType().getName());
-        System.out.println(this.listView.getSelectionModel().getSelectedItem().toString());
-    }
+
 
 
 

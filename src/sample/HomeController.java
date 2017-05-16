@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,16 +34,37 @@ public class HomeController implements Initializable {
 
         for (int i = 0; i < 4; i++){
             try {
-                Label lbl = new Label("Item" + i);
-                lbl.setGraphic(new ImageView(new Image(new FileInputStream("/Users/G/IdeaProjects/CSEDesignCompetition/src/sample/shield.png"))));
+                Label lbl = new Label("User " + (i+1));
                 this.listView.getItems().add(lbl);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        this.listView.setExpanded(true);
+        this.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
+            //ran when the selected list item is clicked
+            @Override
+            public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+                // Your action here
+                System.out.println("Selected item: " + newValue.getText());
+                System.out.println("Going to send file scene");
+                try {
+                    goToSendFileScene();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
     }
+    public void goToSendFileScene() throws IOException {
+        Parent send_file_page_parent = FXMLLoader.load(getClass().getResource("send-file.fxml"));
+        Scene send_file_page_scene = new Scene(send_file_page_parent);
+        Stage app_stage = (Stage) this.listView.getScene().getWindow();
+        app_stage.setScene(send_file_page_scene);
+        app_stage.show();
+    }
+
 
 }

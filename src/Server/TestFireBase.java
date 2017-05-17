@@ -48,9 +48,9 @@ public class TestFireBase {
                 System.out.println("Child Added");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 if((boolean) userHandle.get("online")){
-                    onlineUsers.put((String) userHandle.get("username"),(String) userHandle.get("IPAddress"));
+                    onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
-                    onlineUsers.remove(userHandle.get("username"));
+                    onlineUsers.remove(dataSnapshot.getKey());
                 }
             }
 
@@ -59,9 +59,9 @@ public class TestFireBase {
                 System.out.println("Online Changed");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 if((boolean) userHandle.get("online")){
-                    onlineUsers.put((String) userHandle.get("username"),(String) userHandle.get("IPAddress"));
+                    onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
-                    onlineUsers.remove(userHandle.get("username"));
+                    onlineUsers.remove(dataSnapshot.getKey());
                 }
             }
 
@@ -69,7 +69,7 @@ public class TestFireBase {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 System.out.println("Online Removed");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
-                onlineUsers.remove(userHandle.get("username"));
+                onlineUsers.remove(dataSnapshot.getKey());
             }
 
             @Override
@@ -83,13 +83,13 @@ public class TestFireBase {
             }
         });
 
-        ref.child("Nic").setValue(new User(true, InetAddress.getLocalHost().toString().split("/")[1], "Nic"));
+        ref.child("Nic").setValue(new User(true, InetAddress.getLocalHost().toString().split("/")[1]));
 
         Runnable test = new Runnable() {
             @Override
             public void run() {
                 try {
-                    ref.child("Ji").setValue(new User(true , InetAddress.getLocalHost().toString().split("/")[1] , "Ji"));
+                    ref.child("Ji").setValue(new User(true , InetAddress.getLocalHost().toString().split("/")[1]));
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 }
@@ -138,12 +138,10 @@ public class TestFireBase {
 
 class User{
 
-    public String username;
     public boolean online;
     public String IPAddress;
 
-    User(boolean online, String IPAddress, String username) throws UnknownHostException {
-        this.username = username;
+    User(boolean online, String IPAddress) throws UnknownHostException {
         this.online = online;
         this.IPAddress = IPAddress;
     }

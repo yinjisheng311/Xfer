@@ -97,26 +97,24 @@ public class LoginController implements Initializable {
         System.out.println(base64format);
 
         // Fetch from firebase and compare the string
-//        Thread firebaseThread = new BackgroundFireBase();
-//        firebaseThread.start();
-
-        // If equal then load next page
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+        String firebaseData = firebaseSingleton.Authenticate(username);
+        System.out.println(firebaseData);
 
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        if (username.equals("user") && password.equals("user")){
+
+        if (firebaseData.equals(base64format)){
             System.out.println("succeeded");
             //app_stage.hide();
             app_stage.setScene(home_page_scene);
             app_stage.show();
-
-
-        } else {
+        }
+        else {
             System.out.println("failed");
             this.username.clear();
             this.password.clear();
-
         }
     }
 

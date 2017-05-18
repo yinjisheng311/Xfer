@@ -22,7 +22,9 @@ import java.util.*;
  */
 public class BackgroundFireBase extends Thread {
 
-    public void start() {
+    public Map<String,String> onlineUsers;
+
+    BackgroundFireBase() {
         // Fetch the service account key JSON file contents
         FileInputStream serviceAccount = null;
         try {
@@ -44,7 +46,7 @@ public class BackgroundFireBase extends Thread {
                 .getReference("/");
         System.out.println(ref);
 
-        Map<String,String> onlineUsers = new HashMap<String,String>();
+        onlineUsers = new HashMap<String,String>();
 
         ref.addChildEventListener(new ChildEventListener() {
 
@@ -73,7 +75,6 @@ public class BackgroundFireBase extends Thread {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 System.out.println("Online Removed");
-                HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 onlineUsers.remove(dataSnapshot.getKey());
             }
 
@@ -92,12 +93,12 @@ public class BackgroundFireBase extends Thread {
 
 class User{
 
-    public boolean online;
+    public boolean Online;
     public String IPAddress;
     public String Auth;
 
-    User(boolean online, String IPAddress, String Auth) throws UnknownHostException {
-        this.online = online;
+    User(boolean Online, String IPAddress, String Auth) throws UnknownHostException {
+        this.Online = Online;
         this.IPAddress = IPAddress;
         this.Auth = Auth;
     }

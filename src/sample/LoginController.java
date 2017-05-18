@@ -76,30 +76,30 @@ public class LoginController implements Initializable {
 
         //AES the password
         // Generate the secret key specs.
-//        byte[] user = username.getBytes();
-//        byte[] key = password.getBytes();
-//        MessageDigest sha = MessageDigest.getInstance("SHA-1");
-//        key = sha.digest(key);
-//        key = Arrays.copyOf(key, 16);
-//
-//        user = sha.digest(user);
-//        user = Arrays.copyOf(user, 16);
-//
-//
-//        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-//        // Instantiate the cipher
-//        Cipher cipher = Cipher.getInstance("AES");
-//        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-//
-//        // Encrypt the username using the hashed password AES key
-//        byte[] encryptedBytes = cipher.doFinal(user);
-//        String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
-//        System.out.println(base64format);
+        byte[] user = username.getBytes();
+        byte[] key = password.getBytes();
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16);
 
-//        // Fetch from firebase and compare the string
-//        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
-//        String firebaseData = firebaseSingleton.Authenticate(username);
-//        System.out.println(firebaseData);
+        user = sha.digest(user);
+        user = Arrays.copyOf(user, 16);
+
+
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        // Instantiate the cipher
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+
+        // Encrypt the username using the hashed password AES key
+        byte[] encryptedBytes = cipher.doFinal(user);
+        String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
+        System.out.println(base64format);
+
+        // Fetch from firebase and compare the string
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+        String firebaseData = firebaseSingleton.Authenticate(username);
+        System.out.println(firebaseData);
 
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);

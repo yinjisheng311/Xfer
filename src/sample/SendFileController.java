@@ -94,7 +94,7 @@ public class SendFileController implements Initializable {
     void sendFiles(ActionEvent event) {
         System.out.println(this.fileList.toString());
         // get files from fileList and send them out
-        
+
 
     }
 

@@ -1,5 +1,6 @@
 package sample;
 
+import Server.BackgroundFireBase;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
@@ -96,8 +97,10 @@ public class LoginController implements Initializable {
         System.out.println(base64format);
 
         // Fetch from firebase and compare the string
+//        Thread firebaseThread = new BackgroundFireBase();
+//        firebaseThread.start();
 
-        // If equal then
+        // If equal then load next page
 
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);

@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -28,7 +30,7 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     @FXML
-    private BorderPane homeBordenPane;
+    private StackPane stackPane;
 
     @FXML
     private JFXListView<Label> listView;
@@ -73,9 +75,18 @@ public class HomeController implements Initializable {
     @FXML
     void loadDialog(ActionEvent event) {
         JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Heading"));
-        content.setBody(new Text("THIS IS BODY"));
-//        JFXDialog dialog = new JFXDialog(homeBordenPane, new Label("Hello"), JFXDialog.DialogTransition.CENTER));
+        content.setHeading(new Text("Send Request"));
+        content.setBody(new Text("Someone wants to send you files"));
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button = new JFXButton("Okay");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+        content.setActions(button);
+        dialog.show();
     }
 
 }

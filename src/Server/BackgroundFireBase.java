@@ -28,6 +28,7 @@ public class BackgroundFireBase{
 
     private static BackgroundFireBase instance = null;
     private BackgroundFireBase() {
+        start();
         ref = FirebaseDatabase
                 .getInstance()
                 .getReference("/");

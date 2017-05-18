@@ -76,36 +76,37 @@ public class LoginController implements Initializable {
 
         //AES the password
         // Generate the secret key specs.
-        byte[] user = username.getBytes();
-        byte[] key = password.getBytes();
-        MessageDigest sha = MessageDigest.getInstance("SHA-1");
-        key = sha.digest(key);
-        key = Arrays.copyOf(key, 16);
+//        byte[] user = username.getBytes();
+//        byte[] key = password.getBytes();
+//        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+//        key = sha.digest(key);
+//        key = Arrays.copyOf(key, 16);
+//
+//        user = sha.digest(user);
+//        user = Arrays.copyOf(user, 16);
+//
+//
+//        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+//        // Instantiate the cipher
+//        Cipher cipher = Cipher.getInstance("AES");
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+//
+//        // Encrypt the username using the hashed password AES key
+//        byte[] encryptedBytes = cipher.doFinal(user);
+//        String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
+//        System.out.println(base64format);
 
-        user = sha.digest(user);
-        user = Arrays.copyOf(user, 16);
-
-
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-        // Instantiate the cipher
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-
-        // Encrypt the username using the hashed password AES key
-        byte[] encryptedBytes = cipher.doFinal(user);
-        String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
-        System.out.println(base64format);
-
-        // Fetch from firebase and compare the string
-        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
-        String firebaseData = firebaseSingleton.Authenticate(username);
-        System.out.println(firebaseData);
+//        // Fetch from firebase and compare the string
+//        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+//        String firebaseData = firebaseSingleton.Authenticate(username);
+//        System.out.println(firebaseData);
 
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if (firebaseData.equals(base64format)){
+//        if (firebaseData.equals(base64format)){
+        if (username.equals("user")){
             System.out.println("succeeded");
             //app_stage.hide();
             app_stage.setScene(home_page_scene);
@@ -123,19 +124,5 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-//    @FXML
-//    private void handleDragOver(DragEvent event){
-//        //got the plus sign when you hover over it
-//        //only if it is a file, not html etc
-//        if(event.getDragboard().hasFiles()){
-//            event.acceptTransferModes(TransferMode.ANY);
-//        }
-//
-//    }
-//    @FXML
-//    private void handleDrop(DragEvent event) throws FileNotFoundException {
-//        List<File> files = event.getDragboard().getFiles();
-//        Image img = new Image(new FileInputStream(files.get(0)));
-//
-//    }
+
 }

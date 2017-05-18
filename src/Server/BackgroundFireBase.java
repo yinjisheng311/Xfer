@@ -20,11 +20,27 @@ import java.util.*;
 /**
  * Created by nicholas on 15-May-17.
  */
-public class BackgroundFireBase extends Thread {
+public class BackgroundFireBase{
 
     public Map<String,String> onlineUsers;
 
-    BackgroundFireBase() {
+    private final DatabaseReference ref;
+
+    private static BackgroundFireBase instance = null;
+    private BackgroundFireBase() {
+        ref = FirebaseDatabase
+                .getInstance()
+                .getReference("/");
+    }
+
+    public static BackgroundFireBase getInstance() {
+        if(instance == null) {
+            instance = new BackgroundFireBase();
+        }
+        return instance;
+    }
+
+    private void start() {
         // Fetch the service account key JSON file contents
         FileInputStream serviceAccount = null;
         try {
@@ -39,12 +55,6 @@ public class BackgroundFireBase extends Thread {
                 .setDatabaseUrl("https://cse-design-competition.firebaseio.com/")
                 .build();
         FirebaseApp.initializeApp(options);
-
-// As an admin, the app has access to read and write all data, regardless of Security Rules
-        DatabaseReference ref = FirebaseDatabase
-                .getInstance()
-                .getReference("/");
-        System.out.println(ref);
 
         onlineUsers = new HashMap<String,String>();
 
@@ -88,6 +98,23 @@ public class BackgroundFireBase extends Thread {
                 System.out.println("Cancelled!");
             }
         });
+    }
+
+    public String Authenticate(String user){
+
+        final String[] AuthString = new String[1];
+        ref.child("/"+ user).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                AuthString[0] = dataSnapshot.getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return AuthString[0];
     }
 }
 

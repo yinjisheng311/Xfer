@@ -20,11 +20,16 @@ import java.util.*;
 /**
  * Created by nicholas on 15-May-17.
  */
-public class TestFireBase {
+public class BackgroundFireBase extends Thread {
 
-    public static void main(String[] args) throws FileNotFoundException, InterruptedException, UnknownHostException {
+    public void start() {
         // Fetch the service account key JSON file contents
-        FileInputStream serviceAccount = new FileInputStream("src//Server//cse-design-competition-firebase-adminsdk-nj8bz-0f00554d8d.json");
+        FileInputStream serviceAccount = null;
+        try {
+            serviceAccount = new FileInputStream("src//Server//cse-design-competition-firebase-adminsdk-nj8bz-0f00554d8d.json");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 // Initialize the app with a service account, granting admin privileges
         FirebaseOptions options = new FirebaseOptions.Builder()
@@ -82,57 +87,6 @@ public class TestFireBase {
                 System.out.println("Cancelled!");
             }
         });
-
-        ref.child("Nic").setValue(new User(true, InetAddress.getLocalHost().toString().split("/")[1]));
-
-        Runnable test = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ref.child("Ji").setValue(new User(true , InetAddress.getLocalHost().toString().split("/")[1]));
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                DatabaseReference userRef = ref.child("Ji");
-                Map<String, Object> userUpdates = new HashMap<String, Object>();
-                userUpdates.put("IPAddress", "123.456.32.8");
-                userUpdates.put("online",true);
-
-                userRef.updateChildren(userUpdates);
-            }
-        };
-
-        Thread.sleep(5000);
-
-        Thread tester = new Thread(test);
-        tester.start();
-
-        Runnable anotherTest = new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    System.out.println(onlineUsers.toString());
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-
-        new Thread(anotherTest).start();
-
-//        while(true){ // This is to make sure this thread never terminates, destroying listener threads
-//            Thread.sleep(Long.MAX_VALUE);
-//        }
     }
 }
 
@@ -140,10 +94,12 @@ class User{
 
     public boolean online;
     public String IPAddress;
+    public String Auth;
 
-    User(boolean online, String IPAddress) throws UnknownHostException {
+    User(boolean online, String IPAddress, String Auth) throws UnknownHostException {
         this.online = online;
         this.IPAddress = IPAddress;
+        this.Auth = Auth;
     }
 }
 

@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CSE-Design-Competition-Gradle_main.iml" filepath="$PROJECT_DIR$/.idea/modules/CSE-Design-Competition-Gradle_main.iml" group="Gradle" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CSE-Design-Competition-Gradle_test.iml" filepath="$PROJECT_DIR$/.idea/modules/CSE-Design-Competition-Gradle_test.iml" group="Gradle" />
       <module fileurl="file://$PROJECT_DIR$/CSEDesignCompetition.iml" filepath="$PROJECT_DIR$/CSEDesignCompetition.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle.iml" />
       <module fileurl="file://D:\Backup\SUTD\ISTD\Computer Systems Engineering\CSE-Design-Competition\.idea\modules\Gradle_main.iml" filepath="D:\Backup\SUTD\ISTD\Computer Systems Engineering\CSE-Design-Competition\.idea\modules\Gradle_main.iml" group="Gradle" />
       <module fileurl="file://D:\Backup\SUTD\ISTD\Computer Systems Engineering\CSE-Design-Competition\.idea\modules\Gradle_test.iml" filepath="D:\Backup\SUTD\ISTD\Computer Systems Engineering\CSE-Design-Competition\.idea\modules\Gradle_test.iml" group="Gradle" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle_main.iml" group="Gradle" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Gradle_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Gradle_test.iml" group="Gradle" />
     </modules>
   </component>
 </project>

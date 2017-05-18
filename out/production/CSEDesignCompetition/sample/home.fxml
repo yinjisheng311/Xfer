@@ -50,13 +50,17 @@
             </padding>
         </HBox>
     </bottom>
-    <left>
-        <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
-    </left>
-    <right>
-        <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
-    </right>
-    <center>
-        <JFXListView fx:id="listView" BorderPane.alignment="CENTER" />
-    </center>
+   <center>
+      <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXListView fx:id="listView" />
+         </children>
+      </StackPane>
+   </center>
+   <right>
+      <JFXButton onAction="#loadDialog" prefWidth="150.0" text="Dialog" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </left>
 </BorderPane>

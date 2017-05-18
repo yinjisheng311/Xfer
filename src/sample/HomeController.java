@@ -1,9 +1,6 @@
 package sample;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -25,6 +24,9 @@ import java.util.ResourceBundle;
 
 
 public class HomeController implements Initializable {
+
+    @FXML
+    private BorderPane homeBordenPane;
 
     @FXML
     private JFXListView<Button> listView;
@@ -55,5 +57,12 @@ public class HomeController implements Initializable {
     }
 
 
+    @FXML
+    void loadDialog(ActionEvent event) {
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Heading"));
+        content.setBody(new Text("THIS IS BODY"));
+//        JFXDialog dialog = new JFXDialog(homeBordenPane, new Label("Hello"), JFXDialog.DialogTransition.CENTER));
+    }
 
 }

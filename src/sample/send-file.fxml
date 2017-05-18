@@ -69,6 +69,8 @@
       <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <JFXButton fx:id="homeButton" text="Home" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Button mnemonicParsing="false" onAction="#sendFiles" text="Send" />
          </children>
       </VBox>
    </left>

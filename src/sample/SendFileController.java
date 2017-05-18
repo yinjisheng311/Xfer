@@ -25,10 +25,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class SendFileController implements Initializable {
+
+    List<File> fileList;
 
     @FXML
     private ImageView imageView;
@@ -41,7 +44,9 @@ public class SendFileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        this.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
+        // instantiate fileList
+        this.fileList = new ArrayList<>();
+
         homeButton.setOnAction(e -> {
             try {
                 goHome();
@@ -63,9 +68,11 @@ public class SendFileController implements Initializable {
     @FXML
     private void handleDrop(DragEvent event) throws FileNotFoundException {
         System.out.println("something dropped");
+
         List<File> files = event.getDragboard().getFiles();
+        this.fileList.add(files.get(0));
         String fileName = files.get(0).getName();
-        Image img = new Image(new FileInputStream(files.get(0)));
+        System.out.println(files);
 //        ObservableList<Label> fileList;
 //        fileList = this.fileListView.getSelectionModel().getSelectedItems();
 //        for (Label l: fileList){
@@ -82,6 +89,13 @@ public class SendFileController implements Initializable {
         Stage app_stage = (Stage) this.homeButton.getScene().getWindow();
         app_stage.setScene(send_file_page_scene);
         app_stage.show();
+    }
+    @FXML
+    void sendFiles(ActionEvent event) {
+        System.out.println(this.fileList.toString());
+        // get files from fileList and send them out
+
+
     }
 
 

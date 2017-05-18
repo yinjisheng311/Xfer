@@ -29,6 +29,6 @@
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.22.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client:1.22.0" level="project" />
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client-jackson2:1.22.0" level="project" />
-    <orderEntry type="module" module-name="CSE-Design-Competition-Gradle_main" />
+    <orderEntry type="module" module-name="Gradle_main" />
   </component>
 </module>

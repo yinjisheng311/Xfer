@@ -105,7 +105,8 @@ public class LoginController implements Initializable {
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        if (firebaseData.equals(base64format)){
+//        if (firebaseData.equals(base64format)){
+        if (username.equals("user")){
             System.out.println("succeeded");
             //app_stage.hide();
             app_stage.setScene(home_page_scene);
@@ -123,19 +124,5 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-//    @FXML
-//    private void handleDragOver(DragEvent event){
-//        //got the plus sign when you hover over it
-//        //only if it is a file, not html etc
-//        if(event.getDragboard().hasFiles()){
-//            event.acceptTransferModes(TransferMode.ANY);
-//        }
-//
-//    }
-//    @FXML
-//    private void handleDrop(DragEvent event) throws FileNotFoundException {
-//        List<File> files = event.getDragboard().getFiles();
-//        Image img = new Image(new FileInputStream(files.get(0)));
-//
-//    }
+
 }

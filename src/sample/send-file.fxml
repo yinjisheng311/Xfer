@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SendFileController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -50,17 +50,26 @@
          </padding>
       </HBox>
    </bottom>
-   <left>
-      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
-   </left>
    <right>
-      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXListView />
+            <JFXListView fx:id="fileListView" />
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@cloud-computing.png" />
+               </image>
+            </ImageView>
          </children>
       </VBox>
    </center>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <JFXButton fx:id="homeButton" text="Home" />
+         </children>
+      </VBox>
+   </left>
 </BorderPane>

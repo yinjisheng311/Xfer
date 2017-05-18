@@ -24,14 +24,16 @@ public class BackgroundFireBase{
 
     public Map<String,String> onlineUsers;
 
-    private final DatabaseReference ref;
+//    private final DatabaseReference ref = FirebaseDatabase
+//                                                .getInstance()
+//                                                .getReference("/");
+
+    private DatabaseReference ref;
 
     private static BackgroundFireBase instance = null;
+
     private BackgroundFireBase() {
         start();
-        ref = FirebaseDatabase
-                .getInstance()
-                .getReference("/");
     }
 
     public static BackgroundFireBase getInstance() {
@@ -57,7 +59,16 @@ public class BackgroundFireBase{
                 .build();
         FirebaseApp.initializeApp(options);
 
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+        ref = FirebaseDatabase
+                .getInstance()
+                .getReference("/");
+
         onlineUsers = new HashMap<String,String>();
+
+        ref = FirebaseDatabase
+                        .getInstance()
+                        .getReference("/");
 
         ref.addChildEventListener(new ChildEventListener() {
 

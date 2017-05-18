@@ -1,16 +1,21 @@
 package Server;
 
+import com.google.api.client.util.ArrayMap;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseCredentials;
 import com.google.firebase.database.*;
+import com.google.firebase.tasks.OnSuccessListener;
+import com.sun.org.apache.xpath.internal.SourceTree;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by nicholas on 15-May-17.
@@ -125,9 +130,9 @@ public class TestFireBase {
 
         new Thread(anotherTest).start();
 
-        while(true){ // This is to make sure this thread never terminates, destroying listener threads
-            Thread.sleep(Long.MAX_VALUE);
-        }
+//        while(true){ // This is to make sure this thread never terminates, destroying listener threads
+//            Thread.sleep(Long.MAX_VALUE);
+//        }
     }
 }
 

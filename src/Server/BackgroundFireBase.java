@@ -17,6 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
 import java.util.concurrent.Phaser;
+import java.util.concurrent.RunnableFuture;
 
 /**
  * Created by nicholas on 15-May-17.
@@ -111,6 +112,23 @@ public class BackgroundFireBase{
                 System.out.println("Cancelled!");
             }
         });
+
+        Runnable test = new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    System.out.println(onlineUsers.toString());
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        new Thread(test).start();
+
     }
 
     public String Authenticate(String user){

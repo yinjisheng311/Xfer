@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.*;
+import java.util.concurrent.Phaser;
 
 /**
  * Created by nicholas on 15-May-17.
@@ -115,17 +116,25 @@ public class BackgroundFireBase{
     public String Authenticate(String user){
 
         final String[] AuthString = new String[1];
-        ref.child("/"+ user).addListenerForSingleValueEvent(new ValueEventListener() {
+        Phaser phaser = new Phaser();
+        phaser.register();// Registers this main thread
+        phaser.register(); // Registers listener thread
+        ref.child("/"+ user+"/Auth").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 AuthString[0] = dataSnapshot.getValue(String.class);
+                System.out.println("Single Query Data Change");
+                System.out.println(dataSnapshot);
+                System.out.println(dataSnapshot.getValue(String.class));
+                phaser.arriveAndDeregister();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                System.out.println("Cancelled");
             }
         });
+        phaser.arriveAndAwaitAdvance();
         return AuthString[0];
     }
 }

@@ -71,7 +71,7 @@ public class LoginController implements Initializable {
     void authenticate(ActionEvent event) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         String username = this.username.getText();
         String password = this.password.getText();
-
+        final boolean[] authenticated = {false};
 
 
         //AES the password
@@ -96,27 +96,29 @@ public class LoginController implements Initializable {
         String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
         System.out.println(base64format);
 
-        // Fetch from firebase and compare the string
-        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
-        String firebaseData = firebaseSingleton.Authenticate(username);
-        System.out.println(firebaseData);
+        Runnable firebaseAuthentication = new Runnable() {
+            @Override
+            public void run() {
+                // Fetch from firebase and compare the string
+                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+                String firebaseData = firebaseSingleton.Authenticate(username);
 
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                if (firebaseData.equals(base64format)){
+                    System.out.println("succeeded");
+                    authenticated[0] = true;
+                }
+                else {
+                    System.out.println("failed");
+                }
+            }
+        };
 
-//        if (firebaseData.equals(base64format)){
-        if (username.equals("user")){
-            System.out.println("succeeded");
-            //app_stage.hide();
-            app_stage.setScene(home_page_scene);
-            app_stage.show();
-        }
-        else {
-            System.out.println("failed");
-            this.username.clear();
-            this.password.clear();
-        }
+        Thread firebaseAuthenticationThread = new Thread(firebaseAuthentication);
+        firebaseAuthenticationThread.start();
+
+
+
+
     }
 
 

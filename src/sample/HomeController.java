@@ -1,5 +1,6 @@
 package sample;
 
+import Server.BackgroundFireBase;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -87,6 +88,18 @@ public class HomeController implements Initializable {
         });
         content.setActions(button);
         dialog.show();
+    }
+
+
+    // to fetch the list of all online users currently
+    public void populateList(){
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+//        String user1 = firebaseSingleton.onlineUsers.get(0);
+//        System.out.println(user1);
+        System.out.println(firebaseSingleton.onlineUsers.toString());
+        for(int i=0 ; i < firebaseSingleton.onlineUsers.size(); i ++){
+            System.out.println(firebaseSingleton.onlineUsers.get(i));
+        }
     }
 
 

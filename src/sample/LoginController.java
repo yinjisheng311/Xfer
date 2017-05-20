@@ -48,8 +48,6 @@ public class LoginController implements Initializable {
     @FXML
     private StackPane stackPane;
 
-    public static String userN, passW;
-
 
     @FXML
     void authenticate(ActionEvent event) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, InterruptedException {
@@ -142,8 +140,22 @@ public class LoginController implements Initializable {
             app_stage.setScene(home_page_scene);
             app_stage.show();
         } else {
-            System.out.println("Not moving on");
             // tells the user to try again
+
+            System.out.println("Not moving on");
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("Invalid Credentials"));
+            content.setBody(new Text("Please try again!"));
+            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+            JFXButton button = new JFXButton("Okay");
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+                }
+            });
+            content.setActions(button);
+            dialog.show();
         }
 
         System.out.println("Finished authentication");

@@ -98,7 +98,7 @@ public class TestFireBase {
                 DatabaseReference userRef = ref.child("Ji");
                 Map<String, Object> userUpdates = new HashMap<String, Object>();
                 userUpdates.put("IPAddress", "123.456.32.8");
-                userUpdates.put("online",true);
+                userUpdates.put("Online",true);
 
                 userRef.updateChildren(userUpdates);
             }

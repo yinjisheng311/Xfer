@@ -32,7 +32,7 @@ import java.util.Arrays;
 public class Main extends Application {
 
     Stage window;
-    BackgroundFireBase firebaseSingleton;
+    public static BackgroundFireBase firebaseSingleton;
 
     @FXML
     private JFXTextField username;
@@ -116,7 +116,7 @@ public class Main extends Application {
             @Override
             public void run() {
                 // Fetch from firebase and compare the string
-                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+//                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
                 String firebaseData = firebaseSingleton.Authenticate(finalUsername);
 
                 if (firebaseData.equals(base64format)){

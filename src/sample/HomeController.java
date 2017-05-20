@@ -93,12 +93,12 @@ public class HomeController implements Initializable {
 
     // to fetch the list of all online users currently
     public void populateList(){
-        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+        Main.firebaseSingleton = BackgroundFireBase.getInstance();
 //        String user1 = firebaseSingleton.onlineUsers.get(0);
 //        System.out.println(user1);
-        System.out.println(firebaseSingleton.onlineUsers.toString());
-        for(int i=0 ; i < firebaseSingleton.onlineUsers.size(); i ++){
-            System.out.println(firebaseSingleton.onlineUsers.get(i));
+        System.out.println(Main.firebaseSingleton.onlineUsers.toString());
+        for(int i=0 ; i < Main.firebaseSingleton.onlineUsers.size(); i ++){
+            System.out.println(Main.firebaseSingleton.onlineUsers.get(i));
         }
     }
 

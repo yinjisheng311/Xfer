@@ -111,8 +111,8 @@ public class LoginController implements Initializable {
             @Override
             public void run() {
                 // Fetch from firebase and compare the string
-                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
-                String firebaseData = firebaseSingleton.Authenticate(finalUsername);
+                Main.firebaseSingleton = BackgroundFireBase.getInstance();
+                String firebaseData = Main.firebaseSingleton.Authenticate(finalUsername);
 
                 if (firebaseData.equals(base64format)){
                     System.out.println("succeeded");

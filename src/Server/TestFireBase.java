@@ -42,7 +42,7 @@ public class TestFireBase {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Child Added");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
-                if((boolean) userHandle.get("online")){
+                if((boolean) userHandle.get("Online")){
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
                     onlineUsers.remove(dataSnapshot.getKey());
@@ -53,7 +53,7 @@ public class TestFireBase {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Online Changed");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
-                if((boolean) userHandle.get("online")){
+                if((boolean) userHandle.get("Online")){
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
                     onlineUsers.remove(dataSnapshot.getKey());
@@ -78,7 +78,7 @@ public class TestFireBase {
             }
         });
 
-        ref.child("Nic").setValue(new User(true, InetAddress.getLocalHost().toString().split("/")[1] , "UH6L+Yjwovt02rMYY+s/vU9U4Eb423P/WgeT7nku69s="));
+//        ref.child("Nic").setValue(new User(true, InetAddress.getLocalHost().toString().split("/")[1] , "UH6L+Yjwovt02rMYY+s/vU9U4Eb423P/WgeT7nku69s="));
 
         Runnable test = new Runnable() {
             @Override
@@ -107,7 +107,7 @@ public class TestFireBase {
         Thread.sleep(5000);
 
         Thread tester = new Thread(test);
-        tester.start();
+//        tester.start();
 
         Runnable anotherTest = new Runnable() {
             @Override

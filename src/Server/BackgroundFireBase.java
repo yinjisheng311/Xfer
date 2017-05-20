@@ -77,7 +77,7 @@ public class BackgroundFireBase{
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Child Added");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
-                if((boolean) userHandle.get("online")){
+                if((boolean) userHandle.get("Online")){
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
                     onlineUsers.remove(dataSnapshot.getKey());
@@ -88,7 +88,7 @@ public class BackgroundFireBase{
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Online Changed");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
-                if((boolean) userHandle.get("online")){
+                if((boolean) userHandle.get("Online")){
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
                     onlineUsers.remove(dataSnapshot.getKey());

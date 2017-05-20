@@ -42,9 +42,13 @@ public class SendFileController implements Initializable {
     @FXML
     private JFXListView<Label> fileListView;
 
+    @FXML
+    private Label receiver;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // instantiate fileList
+        this.receiver.setText(HomeController.enteredUser);
         this.fileList = new ArrayList<>();
 
         homeButton.setOnAction(e -> {

@@ -25,6 +25,8 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -36,18 +38,28 @@ public class HomeController implements Initializable {
     @FXML
     private JFXListView<Label> listView;
 
+    public static String enteredUser;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        enteredUser = "";
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+        System.out.println(firebaseSingleton.onlineUsers.toString());
 
-        for (int i = 0; i < 4; i++){
+        Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
             try {
-                Label lbl = new Label("User " + (i+1));
+                Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
                 this.listView.getItems().add(lbl);
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         this.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
             //ran when the selected list item is clicked
             @Override
@@ -56,6 +68,7 @@ public class HomeController implements Initializable {
                 System.out.println("Selected item: " + newValue.getText());
                 System.out.println("Going to send file scene");
                 try {
+                    enteredUser = newValue.getText();
                     goToSendFileScene();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -88,6 +101,7 @@ public class HomeController implements Initializable {
         });
         content.setActions(button);
         dialog.show();
+        populateList();
     }
 
 
@@ -99,6 +113,21 @@ public class HomeController implements Initializable {
         System.out.println(firebaseSingleton.onlineUsers.toString());
         for(int i=0 ; i < firebaseSingleton.onlineUsers.size(); i ++){
             System.out.println(firebaseSingleton.onlineUsers.get(i));
+        }
+
+        //testing
+        Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+            try {
+                Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
+                this.listView.getItems().add(lbl);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

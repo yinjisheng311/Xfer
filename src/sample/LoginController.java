@@ -136,6 +136,8 @@ public class LoginController implements Initializable {
         if (authenticated[0]) {
             Parent home_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
             Scene home_page_scene = new Scene(home_page_parent);
+            home_page_scene.getStylesheets().add(getClass().getResource("lisStyles.css").toExternalForm());
+
             Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             System.out.println("moving on");
             app_stage.setScene(home_page_scene);

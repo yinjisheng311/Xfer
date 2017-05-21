@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SendFileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #282827;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SendFileController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -64,7 +64,7 @@
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <Label fx:id="receiver" alignment="CENTER" text="Sending To:" />
+            <Label fx:id="receiver" alignment="CENTER" text="Sending To:" textFill="#4d4d4d" />
             <Region prefHeight="200.0" prefWidth="200.0" />
             <ImageView fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -72,9 +72,9 @@
                </image>
             </ImageView>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton onAction="#sendFiles" text="Send" />
+            <JFXButton onAction="#sendFiles" style="-fx-background-color: #4fba6f;" text="Send" />
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton fx:id="homeButton" alignment="TOP_LEFT" text="Home" />
+            <JFXButton fx:id="homeButton" alignment="TOP_LEFT" style="-fx-background-color: #868e8d;" text="Home" />
             <Region prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>

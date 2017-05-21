@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -43,41 +44,30 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         enteredUser = "";
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
         System.out.println(firebaseSingleton.onlineUsers.toString());
         System.out.println("While initialising home controller, firebase ref : " + firebaseSingleton.numReferences);
 
-        Runnable firebaseThread = new Runnable() {
-            @Override
-            public void run() {
-                BackgroundFireBase fireBase = BackgroundFireBase.getInstance();
-                while (true){
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    populateList(fireBase.onlineUsers);
-                }
-            }
-        };
+        // creating a deep copy of the firebase list
+        Map<String, String> firebaseCopy = new HashMap<>(firebaseSingleton.onlineUsers);
 
-//        new Thread(firebaseThread).start();
-
-        Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
+        Iterator it = firebaseCopy.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
             try {
                 Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
                 this.listView.getItems().add(lbl);
+                it.remove();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+
 
         this.listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>() {
             //ran when the selected list item is clicked
@@ -109,10 +99,10 @@ public class HomeController implements Initializable {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
             try {
                 Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
                 this.listView.getItems().add(lbl);
+                it.remove();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -123,6 +113,7 @@ public class HomeController implements Initializable {
     public void goToSendFileScene() throws IOException {
         Parent send_file_page_parent = FXMLLoader.load(getClass().getResource("send-file.fxml"));
         Scene send_file_page_scene = new Scene(send_file_page_parent);
+        send_file_page_scene.getStylesheets().add(getClass().getResource("lisStyles.css").toExternalForm());
         Stage app_stage = (Stage) this.listView.getScene().getWindow();
         app_stage.setScene(send_file_page_scene);
         app_stage.show();
@@ -158,20 +149,6 @@ public class HomeController implements Initializable {
             System.out.println(firebaseSingleton.onlineUsers.get(i));
         }
 
-        //testing
-        Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
-            try {
-                Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
-                this.listView.getItems().add(lbl);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 

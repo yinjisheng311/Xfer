@@ -46,6 +46,8 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        receiveFiles();
+
         enteredUser = "";
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
         System.out.println(firebaseSingleton.onlineUsers.toString());

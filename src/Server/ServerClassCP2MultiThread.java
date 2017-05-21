@@ -50,7 +50,7 @@ import javax.xml.bind.DatatypeConverter;
 import AuthenticationConstants.ACs;	// Authentication Constants
 import CSV.CSVUtils;
 
-public class ServerClassCP2MultiThread {
+public class ServerClassCP2MultiThread implements Runnable {
 	
 	private static boolean sendMsg(PrintWriter out,String msg){
 		out.println(msg);
@@ -297,7 +297,7 @@ public class ServerClassCP2MultiThread {
 	 * 	Certificate Location
 	 * 	
 	 */
-	public static void main(String[] args) throws Exception{
+	private void main() throws Exception{
 		
 		//String hostName = args[0];
 //		int portNum = Integer.parseInt(args[0]);
@@ -326,8 +326,16 @@ public class ServerClassCP2MultiThread {
 		}
 		
 	}
-	
-	
+
+
+	@Override
+	public void run() {
+		try {
+			main();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 
 

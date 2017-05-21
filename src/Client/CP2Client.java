@@ -28,8 +28,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import AuthenticationConstants.ACs;
 
-public class CP2Client {
-	public static void main(String[] args) throws Exception {
+public class CP2Client implements Runnable {
+	private void main() throws Exception {
 		System.out.println("CP2: trying to connect");
 		String hostName = "192.168.11.1";
 //		String hostName = "localhost";
@@ -252,4 +252,13 @@ public class CP2Client {
 	      return encryptedFileBytes;
 
 	    }
+
+	@Override
+	public void run() {
+		try {
+			main();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

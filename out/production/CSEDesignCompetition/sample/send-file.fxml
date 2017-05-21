@@ -43,35 +43,40 @@
    <bottom>
       <HBox BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="receiver" text="Label" />
+            <Label text="Label" />
          </children>
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </HBox>
    </bottom>
-   <right>
-      <Region prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </right>
-   <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <JFXListView fx:id="fileListView" />
-            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <Region maxWidth="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+   </center>
+   <right>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="receiver" alignment="CENTER" text="Sending To:" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@cloud-computing.png" />
                </image>
             </ImageView>
-         </children>
-      </VBox>
-   </center>
-   <left>
-      <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
-         <children>
-            <JFXButton fx:id="homeButton" text="Home" />
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" onAction="#sendFiles" text="Send" />
+            <JFXButton onAction="#sendFiles" text="Send" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <JFXButton fx:id="homeButton" alignment="TOP_LEFT" text="Home" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
-   </left>
+   </right>
 </BorderPane>

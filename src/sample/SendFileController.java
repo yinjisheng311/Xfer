@@ -10,8 +10,11 @@ import javafx.animation.Animation;
 import javafx.animation.Transition;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -83,8 +86,26 @@ public class SendFileController implements Initializable {
         System.out.println("something dropped");
 
         //TODO: load gif for one cycle
-        imageView = new ImageView(new Image(getClass().getResourceAsStream("upload.gif")));
-
+        Image uploadGif = new Image(getClass().getResourceAsStream("upload.gif"));
+        this.imageView.setImage(uploadGif);
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(3500);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                Image uploadImg = new Image(getClass().getResourceAsStream("upload.png"));
+                imageView.setImage(uploadImg);
+            }
+        });
+        new Thread(sleeper).start();
 
 
         String fileName;

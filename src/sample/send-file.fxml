@@ -54,15 +54,20 @@
                </children>
             </HBox>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
                <image>
                   <Image url="@upload.png" />
                </image>
             </ImageView>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton onAction="#sendFiles" prefWidth="100.0" style="-fx-background-color: #4fba6f;" text="Send" />
-            <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton fx:id="homeButton" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #868e8d;" text="Home" />
+            <JFXButton onAction="#sendFiles" prefWidth="100.0" style="-fx-background-color: #4fba6f;" text="Send">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin></JFXButton>
+            <JFXButton fx:id="homeButton" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #868e8d;" text="Home">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></JFXButton>
             <Region prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>

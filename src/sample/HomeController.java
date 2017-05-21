@@ -123,7 +123,7 @@ public class HomeController implements Initializable {
 
     public void goToLoginScene() throws IOException {
         //TODO: logs the user out of the firebase as well
-        
+
 
         Parent login_page_parent = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene login_page_scene = new Scene(login_page_parent);

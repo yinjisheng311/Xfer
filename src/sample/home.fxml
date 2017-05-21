@@ -49,14 +49,14 @@
                      <children>
                         <VBox>
                            <children>
-                              <Label text="Xfer without Trudy" textFill="WHITE">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
+                              <ImageView fitHeight="65.0" fitWidth="81.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@shield.png" />
+                                 </image>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="5.0" left="20.0" top="10.0" />
                                  </VBox.margin>
-                              </Label>
+                              </ImageView>
                               <Label text="Status: Available" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" />
@@ -67,12 +67,12 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER">
                            <children>
-                              <JFXButton onAction="#goToLoginScene" prefWidth="66.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
+                              <JFXButton onAction="#goToLoginScene" prefWidth="100.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                    <Insets bottom="10.0" right="10.0" top="20.0" />
                                  </VBox.margin>
                               </JFXButton>
-                              <JFXButton onAction="#receiveFiles" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
+                              <JFXButton onAction="#receiveFiles" prefWidth="100.0" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets bottom="10.0" right="10.0" />
                                  </VBox.margin></JFXButton>

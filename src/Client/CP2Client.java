@@ -18,7 +18,9 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
 
 import javax.crypto.Cipher;
@@ -29,9 +31,19 @@ import javax.xml.bind.DatatypeConverter;
 import AuthenticationConstants.ACs;
 
 public class CP2Client implements Runnable {
+
+	ArrayList<File> filesToBeSent;
+
+	public CP2Client(ArrayList<File> incomingList ){
+		this.filesToBeSent = incomingList;
+	}
+
 	private void main() throws Exception {
 		System.out.println("CP2: trying to connect");
-		String hostName = "192.168.11.1";
+		for (int i = 0; i < this.filesToBeSent.size() ; i++) {
+			System.out.println(this.filesToBeSent.get(i).getName());
+		}
+		String hostName = "10.143.9.169";
 //		String hostName = "localhost";
 		int portNumber = 7777;
 //		String hostName = args[0];
@@ -201,6 +213,7 @@ public class CP2Client implements Runnable {
 //				out.println(ACs.CLIENTDONE);
 //			}
 //		}
+
 		
 		String[] fileList = {};//{"largeFile.txt","medianFile.txt","smallFile.txt"};
 		for(int i = 0; i <fileList.length;i++){

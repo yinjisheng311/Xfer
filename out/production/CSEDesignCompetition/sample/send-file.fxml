@@ -53,7 +53,13 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXListView fx:id="fileListView" />
+            <Region prefHeight="10.0" prefWidth="200.0" />
+            <HBox alignment="TOP_CENTER" prefHeight="330.0" prefWidth="200.0">
+               <children>
+                  <Region prefHeight="200.0" prefWidth="10.0" />
+                  <JFXListView fx:id="fileListView" style="-fx-background-color: grey;" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </left>

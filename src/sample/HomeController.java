@@ -135,7 +135,6 @@ public class HomeController implements Initializable {
         });
         content.setActions(button);
         dialog.show();
-        populateList();
     }
 
 
@@ -153,8 +152,36 @@ public class HomeController implements Initializable {
     }
 
     public void receiveFiles(){
+
         Runnable server = new ServerClassCP2MultiThread();
         new Thread(server).start();
+
+        // TODO: if there is a request to send, pop up the dialog
+
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Send Request"));
+        // TODO: make the name of the sender appear
+        content.setBody(new Text("Someone wants to send you files"));
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+        JFXButton button = new JFXButton("Okay");
+        JFXButton button2 = new JFXButton("No thanks");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //TODO: continue with the rest of the procedure
+            }
+        });
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
+        content.setActions(button);
+        content.setActions(button2);
+        dialog.show();
+
+
     }
 
 

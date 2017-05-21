@@ -33,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class SendFileController implements Initializable {
 
-    List<File> fileList;
+    ArrayList<File> fileList;
 
     @FXML
     private ImageView imageView;
@@ -75,17 +75,24 @@ public class SendFileController implements Initializable {
     private void handleDrop(DragEvent event) throws FileNotFoundException {
         System.out.println("something dropped");
 
+        String fileName;
         List<File> files = event.getDragboard().getFiles();
-        this.fileList.add(files.get(0));
-        String fileName = files.get(0).getName();
+        for (int i = 0; i < files.size(); i++) {
+            this.fileList.add(files.get(i));
+            fileName = files.get(i).getName();
+            Label lbl = new Label("File Name: " + fileName);
+            this.fileListView.getItems().add(lbl);
+        }
         System.out.println(files);
+//        this.fileList.add(files.get(0));
+//        String fileName = files.get(0).getName();
+
 //        ObservableList<Label> fileList;
 //        fileList = this.fileListView.getSelectionModel().getSelectedItems();
 //        for (Label l: fileList){
 //            System.out.println(l);
 //        }
-        Label lbl = new Label("File Name: " + fileName);
-        this.fileListView.getItems().add(lbl);
+
         // the code below can change the image
 //        this.imageView.setImage(img);
     }
@@ -100,7 +107,8 @@ public class SendFileController implements Initializable {
     void sendFiles(ActionEvent event) {
         System.out.println(this.fileList.toString());
         // get files from fileList and send them out
-        Runnable client = new CP2Client();
+//        Runnable client = new CP2Client(this.fileList);
+        Runnable client = new CP2Client(this.fileList);
         new Thread(client).start();
 
     }

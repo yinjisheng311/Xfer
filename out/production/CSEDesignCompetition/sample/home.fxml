@@ -82,12 +82,12 @@
                                     <Insets bottom="5.0" top="10.0" />
                                  </VBox.margin>
                               </JFXButton>
-                              <JFXButton onAction="#loadDialog" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE" />
+                              <JFXButton onAction="#receiveFiles" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE" />
                            </children>
                         </VBox>
                      </children>
                   </HBox>
-                  <JFXListView fx:id="listView" />
+                  <JFXListView fx:id="listView" style="-fx-background-color: grey;" />
                </children>
             </VBox>
          </children>

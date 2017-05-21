@@ -202,7 +202,7 @@ public class CP2Client implements Runnable {
 //			}
 //		}
 		
-		String[] fileList = {"largeFile.txt","medianFile.txt","smallFile.txt"};
+		String[] fileList = {};//{"largeFile.txt","medianFile.txt","smallFile.txt"};
 		for(int i = 0; i <fileList.length;i++){
 			//tell server this is the starting time
 			File fileToBeSent = new File(fileList[i]);

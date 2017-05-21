@@ -1,5 +1,7 @@
 package sample;
 
+import Client.CP2Client;
+import Server.ServerClassCP2MultiThread;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
@@ -98,9 +100,12 @@ public class SendFileController implements Initializable {
     void sendFiles(ActionEvent event) {
         System.out.println(this.fileList.toString());
         // get files from fileList and send them out
-
+        Runnable client = new CP2Client();
+        new Thread(client).start();
 
     }
+
+    // call the server code
 
 
 }

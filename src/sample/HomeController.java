@@ -1,6 +1,7 @@
 package sample;
 
 import Server.BackgroundFireBase;
+import Server.ServerClassCP2MultiThread;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -150,6 +151,13 @@ public class HomeController implements Initializable {
         }
 
     }
+
+    public void receiveFiles(){
+        Runnable server = new ServerClassCP2MultiThread();
+        new Thread(server).start();
+    }
+
+
 
 
 

@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<BorderPane style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -37,7 +37,7 @@
       </MenuBar>
    </top>
    <bottom>
-      <Label text="InsertAppName©2017" BorderPane.alignment="CENTER_LEFT">
+      <Label text="InsertAppName©2017" textFill="#4d4d4d" BorderPane.alignment="CENTER_LEFT">
          <padding>
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
@@ -63,12 +63,12 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="username" focusColor="#2d89c6" promptText="Username">
+                  <JFXTextField fx:id="username" focusColor="WHITE" promptText="Username" style="-fx-text-fill: #ffffff;">
                      <VBox.margin>
                         <Insets bottom="5.0" left="40.0" right="40.0" top="10.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="password" promptText="Password">
+                  <JFXPasswordField fx:id="password" focusColor="WHITE" promptText="Password" style="-fx-text-fill: #ffffff;">
                      <VBox.margin>
                         <Insets bottom="5.0" left="40.0" right="40.0" top="10.0" />
                      </VBox.margin>

@@ -135,7 +135,7 @@ public class BackgroundFireBase{
             }
         };
 
-        new Thread(test).start();
+//        new Thread(test).start();
 
     }
 

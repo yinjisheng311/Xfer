@@ -41,6 +41,8 @@ public class TestFireBase {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Child Added");
+                System.out.println(dataSnapshot.getKey());
+                System.out.println(dataSnapshot.getValue());
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 if((boolean) userHandle.get("Online")){
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));

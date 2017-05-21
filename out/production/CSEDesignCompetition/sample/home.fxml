@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.HomeController">
     <top>
         <VBox BorderPane.alignment="CENTER">
             <children>
@@ -53,14 +53,44 @@
    <center>
       <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXListView fx:id="listView" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Xfer without Trudy" textFill="WHITE">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="Status: Available" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Region prefHeight="200.0" prefWidth="200.0" />
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                              <JFXButton prefWidth="66.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXButton>
+                              <JFXButton onAction="#loadDialog" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <JFXListView fx:id="listView" />
+               </children>
+            </VBox>
          </children>
       </StackPane>
    </center>
-   <right>
-      <JFXButton onAction="#loadDialog" prefWidth="150.0" text="Dialog" BorderPane.alignment="CENTER" />
-   </right>
-   <left>
-      <Region prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
-   </left>
 </BorderPane>

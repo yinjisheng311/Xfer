@@ -11,13 +11,13 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PublicKey;
-import java.security.SecureRandom;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.*;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
 import java.util.Random;
 
@@ -67,23 +67,23 @@ public class CP2Client {
 		String serverInitialReply = in.readLine();
 		System.out.println("gave me secret message: " + serverInitialReply);
 		
-		//send request for cert and receive signed cert
-		String secondMessage = ACs.REQUESTSIGNEDCERT;
-		out.println(secondMessage);
-		out.flush();
-		String sizeInString = in.readLine();
-		
-		int certificateSize = Integer.parseInt(sizeInString);
-		byte[] signedCertificate = new byte[certificateSize];
-		String signedCertificateInString = in.readLine();
-		signedCertificate = DatatypeConverter.parseBase64Binary(signedCertificateInString);
-		System.out.println("gave me signed certificate");
-		
-		//extract public key from signed certificate
-		//creating X509 certificate object
-		FileOutputStream fileOutput = new FileOutputStream("CA.crt");
-		fileOutput.write(signedCertificate, 0, signedCertificate.length);
-        FileInputStream certFileInput = new FileInputStream("CA.crt");
+//		//send request for cert and receive signed cert
+//		String secondMessage = ACs.REQUESTSIGNEDCERT;
+//		out.println(secondMessage);
+//		out.flush();
+//		String sizeInString = in.readLine();
+//
+//		int certificateSize = Integer.parseInt(sizeInString);
+//		byte[] signedCertificate = new byte[certificateSize];
+//		String signedCertificateInString = in.readLine();
+//		signedCertificate = DatatypeConverter.parseBase64Binary(signedCertificateInString);
+//		System.out.println("gave me signed certificate");
+//
+//		//extract public key from signed certificate
+//		//creating X509 certificate object
+//		FileOutputStream fileOutput = new FileOutputStream("CA.crt");
+//		fileOutput.write(signedCertificate, 0, signedCertificate.length);
+        FileInputStream certFileInput = new FileInputStream("src\\Client\\1001490.crt");
 
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
         X509Certificate CAcert = (X509Certificate) cf.generateCertificate(certFileInput);
@@ -119,15 +119,30 @@ public class CP2Client {
 		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 		keyGen.initialize(1024);
 		KeyPair keyPair = keyGen.generateKeyPair();
-		Key publicKey = keyPair.getPublic();
-		Key privateKey = keyPair.getPrivate();
+//		Key publicKey = keyPair.getPublic();
+//		Key privateKey = keyPair.getPrivate();
 		
 		//receive nonce from server
 		byte[] serverNonceInBytes = new byte[32];
 		String serverNonce = in.readLine();
 		serverNonceInBytes = DatatypeConverter.parseBase64Binary(serverNonce);
 		System.out.println("received nonce from server: " + serverNonce);
-		
+
+		final String privateKeyFileName = "src\\Server\\privateServerNic.der";
+		final Path keyPath = Paths.get(privateKeyFileName);
+		final byte[] privateKeyByteArray = Files.readAllBytes(keyPath);
+		final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByteArray);
+
+		final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+		final PrivateKey privateAppKey = keyFactory.generatePrivate(keySpec);
+
+		// Create encryption cipher
+		final Cipher rsaAppECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+		final Cipher rsaAppDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+
+		rsaAppECipherPrivate.init(Cipher.ENCRYPT_MODE, privateAppKey);
+		rsaAppDCipherPrivate.init(Cipher.DECRYPT_MODE, privateAppKey);
+
 		//encrypt nonce using client private key and send it back to server
 		Cipher Ecipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 		Ecipher.init(Cipher.ENCRYPT_MODE, privateKey);

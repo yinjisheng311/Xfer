@@ -155,6 +155,42 @@ public class BackgroundFireBase{
         phaser.arriveAndAwaitAdvance();
         return AuthString[0];
     }
+
+    // Index 0 : Public Key , Index 1 : Private Key
+    public String[] QueryPubPriv(String user){
+        final String[] PubPriv = new String[2];
+        Phaser phaser = new Phaser();
+        phaser.bulkRegister(3); // Registers main thread, listener for priv and listener for pub
+        ref.child("/"+user+"/Pub").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                PubPriv[0] = dataSnapshot.getValue(String.class);
+                phaser.arriveAndDeregister();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        ref.child("/"+user+"/Priv").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                PubPriv[1] = dataSnapshot.getValue(String.class);
+                phaser.arriveAndDeregister();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        phaser.arriveAndAwaitAdvance();
+        return PubPriv;
+    }
+
 }
 
 class User{

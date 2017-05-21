@@ -16,13 +16,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.SecureRandom;
+import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -44,6 +38,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
@@ -80,9 +75,9 @@ public class Server implements Runnable {
         return null;
     }
 
-    private static Key getAESKey(String AESKeyString, Cipher rsaDCipher) throws IllegalBlockSizeException, BadPaddingException {
-        byte[] byteKey = DatatypeConverter.parseBase64Binary(AESKeyString);
-        byte[] decryptedByteKey = rsaDCipher.doFinal(byteKey);
+    private static Key getAESKey(byte[] AESKeyByte, Cipher rsaDCipher) throws IllegalBlockSizeException, BadPaddingException {
+//        byte[] byteKey = DatatypeConverter.parseBase64Binary(AESKeyString);
+        byte[] decryptedByteKey = rsaDCipher.doFinal(AESKeyByte);
         SecretKey sessionKey = new SecretKeySpec(decryptedByteKey, 0, decryptedByteKey.length, "AES");
         return sessionKey;
     }
@@ -157,7 +152,7 @@ public class Server implements Runnable {
         }
 
         System.out.println("Completed authentication protocol, server ready to receive files");
-        sendMsg(out,ACs.SERVERREADYTORECEIVE);
+//        sendMsg(out,ACs.SERVERREADYTORECEIVE);
 
         return true;
     }
@@ -189,7 +184,9 @@ public class Server implements Runnable {
 
     }
 
-    protected static void handleRequest(Socket clientSocket) throws Exception{
+    protected static void handleRequest(Socket clientSocket, String user, String password) throws Exception{
+        BackgroundFireBase firebase = BackgroundFireBase.getInstance(); // Prolly need to tweak for performance
+        String[] PubPriv = firebase.QueryPubPriv(user);
         final String privateKeyFileName = "src\\Server\\privateServerNic.der";
         final String serverCertPath = "src\\Server\\1001490.crt";
         final Path keyPath = Paths.get(privateKeyFileName);
@@ -197,14 +194,14 @@ public class Server implements Runnable {
         final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByteArray);
 
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        final PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+        final PrivateKey privateAppKey = keyFactory.generatePrivate(keySpec);
 
         // Create encryption cipher
-        final Cipher rsaECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        final Cipher rsaAppECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        final Cipher rsaAppDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
-        rsaECipherPrivate.init(Cipher.ENCRYPT_MODE, privateKey);
-        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
+        rsaAppECipherPrivate.init(Cipher.ENCRYPT_MODE, privateAppKey);
+        rsaAppDCipherPrivate.init(Cipher.DECRYPT_MODE, privateAppKey);
 
 
 
@@ -213,16 +210,38 @@ public class Server implements Runnable {
                         new DataInputStream(clientSocket.getInputStream())));
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-        boolean proceed = authenticationProtocol(in,out,rsaECipherPrivate, rsaDCipherPrivate, serverCertPath);
+        /*
+        Right now authentication is only to authenticate that the other party is using a
+        Legitimate Application that has been produced by us.
+         */
+        boolean proceed = authenticationProtocol(in,out,rsaAppECipherPrivate, rsaAppDCipherPrivate, serverCertPath);
 
         if(!proceed){
             System.out.println("Authentication protocol failed!");
             return;
         }
 
+        byte[] key = password.getBytes();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        Cipher Dcipher = Cipher.getInstance("AES");
+        Dcipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+        byte[] EpublicKeyBytes = DatatypeConverter.parseBase64Binary(PubPriv[0]);
+        byte[] EprivateKeyBytes = DatatypeConverter.parseBase64Binary(PubPriv[1]);
+        byte[] DpublicKeyBytes = Dcipher.doFinal(EpublicKeyBytes);
+        byte[] DprivateKeyBytes = Dcipher.doFinal(EprivateKeyBytes);
+        final PrivateKey privateKey = keyFactory.generatePrivate(new SecretKeySpec(DprivateKeyBytes,0,DprivateKeyBytes.length,"AES"));
+
+        sendMsg(out, DatatypeConverter.printBase64Binary(DpublicKeyBytes) );
+
+        // Create encryption cipher
+        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
+
+
         // "Waiting for encrypted AES Key from client"
         String AESKeyString = in.readLine();
-        Key AESKey = getAESKey(AESKeyString,rsaDCipherPrivate);
+        byte[] AESKeyByte = Dcipher.doFinal(DatatypeConverter.parseBase64Binary(AESKeyString));
+        Key AESKey = getAESKey(AESKeyByte,rsaDCipherPrivate);
 
         Cipher AESCipher = Cipher.getInstance("AES");
         AESCipher.init(Cipher.DECRYPT_MODE, AESKey);
@@ -300,7 +319,7 @@ public class Server implements Runnable {
      * 	Certificate Location
      *
      */
-    private static void main() throws Exception{
+    private void main() throws Exception{
 
         int portNum = 7777;	// socket address
         ServerSocket serverSocket;
@@ -315,7 +334,7 @@ public class Server implements Runnable {
             Runnable OpenConnections = new Runnable(){
                 public void run(){
                     try {
-                        handleRequest(clientSocket);
+                        handleRequest(clientSocket, user, password);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

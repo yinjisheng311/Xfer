@@ -126,7 +126,7 @@ public class Client implements Runnable {
 
         // Create encryption cipher
         final Cipher ApprsaECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        final Cipher ApprsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        final Cipher ApprsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding" );
 
         ApprsaECipherPrivate.init(Cipher.ENCRYPT_MODE, AppprivateKey);
         ApprsaDCipherPrivate.init(Cipher.DECRYPT_MODE, AppprivateKey);

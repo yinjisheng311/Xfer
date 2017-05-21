@@ -31,7 +31,7 @@ import AuthenticationConstants.ACs;
 public class CP2Client implements Runnable {
 	private void main() throws Exception {
 		System.out.println("CP2: trying to connect");
-		String hostName = "192.168.11.1";
+		String hostName = "10.143.9.169";
 //		String hostName = "localhost";
 		int portNumber = 7777;
 //		String hostName = args[0];

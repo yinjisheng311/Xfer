@@ -1,27 +1,31 @@
 package Server;
 
-/**
- * Created by nicholas on 21-May-17.
- */
-
-import AuthenticationConstants.ACs;
-import CSV.CSVUtils;
-
-import javax.crypto.*;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,9 +33,28 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
-public class Server implements Runnable {
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 
-    private static boolean sendMsg(PrintWriter out, String msg){
+import AuthenticationConstants.ACs;	// Authentication Constants
+import CSV.CSVUtils;
+
+public class ServerFailed implements Runnable {
+    private final String user;
+    private final String password;
+
+    ServerFailed(String user, String password){
+        this.user = user;
+        this.password = password;
+    }
+
+    private static boolean sendMsg(PrintWriter out,String msg){
         out.println(msg);
         out.flush();
         return true;
@@ -52,9 +75,9 @@ public class Server implements Runnable {
         return null;
     }
 
-    private static Key getAESKey(String AESKeyString, Cipher rsaDCipher) throws IllegalBlockSizeException, BadPaddingException {
-        byte[] byteKey = DatatypeConverter.parseBase64Binary(AESKeyString);
-        byte[] decryptedByteKey = rsaDCipher.doFinal(byteKey);
+    private static Key getAESKey(byte[] AESKeyByte, Cipher rsaDCipher) throws IllegalBlockSizeException, BadPaddingException {
+//        byte[] byteKey = DatatypeConverter.parseBase64Binary(AESKeyString);
+        byte[] decryptedByteKey = rsaDCipher.doFinal(AESKeyByte);
         SecretKey sessionKey = new SecretKeySpec(decryptedByteKey, 0, decryptedByteKey.length, "AES");
         return sessionKey;
     }
@@ -64,7 +87,7 @@ public class Server implements Runnable {
         return false;
     }
 
-    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, String serverCertPath, String clientID) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, Cipher rsaDCipher, String serverCertPath) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
 
         System.out.println("Starting authentication protocol");
 
@@ -75,21 +98,21 @@ public class Server implements Runnable {
         byte[] encryptedNonce = rsaECipher.doFinal(clientNonceInBytes);
         sendMsg(out, DatatypeConverter.printBase64Binary(encryptedNonce));
 
-        if(!(in.readLine().equals(ACs.REQUESTSIGNEDCERT ))){
-            System.out.println("Request Signed Certificate Error!");
-            return terminateConnection(out);
-        }
-
-        File certFile = new File(serverCertPath);
-        byte[] certBytes = new byte[(int) certFile.length()];
-        BufferedInputStream certFileInput = new BufferedInputStream(new FileInputStream(certFile));
-        certFileInput.read(certBytes,0,certBytes.length);
-        certFileInput.close();
-
-        // Prepping client to receive certificate in bytes
-        sendMsg(out, Integer.toString(certBytes.length) );
-        // Sending signed cert of server - includes public key of client
-        sendMsg(out, DatatypeConverter.printBase64Binary(certBytes));
+//        if(!(in.readLine().equals(ACs.REQUESTSIGNEDCERT ))){
+//            System.out.println("Request Signed Certificate Error!");
+//            return terminateConnection(out);
+//        }
+//
+//        File certFile = new File(serverCertPath);
+//        byte[] certBytes = new byte[(int) certFile.length()];
+//        BufferedInputStream certFileInput = new BufferedInputStream(new FileInputStream(certFile));
+//        certFileInput.read(certBytes,0,certBytes.length);
+//        certFileInput.close();
+//
+//        // Prepping client to receive certificate in bytes
+//        sendMsg(out, Integer.toString(certBytes.length) );
+//        // Sending signed cert of server - includes public key of client
+//        sendMsg(out, DatatypeConverter.printBase64Binary(certBytes));
 
         System.out.println("Waiting for client to confirm my identity");
         if(!ACs.SERVERIDENTIFIED.equals(in.readLine())){
@@ -110,18 +133,18 @@ public class Server implements Runnable {
         // "Receiving nonce encrypted with client's private key"
         encryptedServerNonce = DatatypeConverter.parseBase64Binary(in.readLine());
 
-        // "Requesting for client public key"
-        sendMsg(out,ACs.REQUESTCLIENTPUBLICKEY);
+//        // "Requesting for client public key"
+//        sendMsg(out,ACs.REQUESTCLIENTPUBLICKEY);
+//
+//        // Receiving client's public key
+//        String clientPublicKeyString = in.readLine();
+//
+//        Cipher rsaDCipherClientPublic = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//
+//        Key clientPublicKey = getPublicKey(clientPublicKeyString);
+//        rsaDCipherClientPublic.init(Cipher.DECRYPT_MODE, clientPublicKey);
 
-        // Receiving client's public key
-        String clientPublicKeyString = in.readLine();
-
-        Cipher rsaDCipherClientPublic = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-        Key clientPublicKey = getPublicKey(clientPublicKeyString);
-        rsaDCipherClientPublic.init(Cipher.DECRYPT_MODE, clientPublicKey);
-
-        byte[] decryptedServerNonce = rsaDCipherClientPublic.doFinal(encryptedServerNonce);
+        byte[] decryptedServerNonce = rsaDCipher .doFinal(encryptedServerNonce);
         String decryptedNonceString = new String(decryptedServerNonce, "UTF-16");
         if(!decryptedNonceString.equals(serverNonceString)){
             System.out.println("Client authentication failed!");
@@ -129,7 +152,7 @@ public class Server implements Runnable {
         }
 
         System.out.println("Completed authentication protocol, server ready to receive files");
-        sendMsg(out,ACs.SERVERREADYTORECEIVE);
+//        sendMsg(out,ACs.SERVERREADYTORECEIVE);
 
         return true;
     }
@@ -161,22 +184,24 @@ public class Server implements Runnable {
 
     }
 
-    protected static void handleRequest(Socket clientSocket) throws Exception{
-        final String privateKeyFileName = "D:\\Backup\\SUTD\\ISTD\\Computer Systems Engineering\\CSE-Programming-Assignments\\CSE-Programming-Assignment-2\\privateServerNic.der";
-        final String serverCertPath = "D:\\Backup\\SUTD\\ISTD\\Computer Systems Engineering\\CSE-Programming-Assignments\\CSE-Programming-Assignment-2\\1001490.crt";
+    protected static void handleRequest(Socket clientSocket, String user, String password) throws Exception{
+        BackgroundFireBase firebase = BackgroundFireBase.getInstance(); // Prolly need to tweak for performance
+        String[] PubPriv = firebase.QueryPubPriv(user);
+        final String privateKeyFileName = "src\\Server\\privateServerNic.der";
+        final String serverCertPath = "src\\Server\\1001490.crt";
         final Path keyPath = Paths.get(privateKeyFileName);
         final byte[] privateKeyByteArray = Files.readAllBytes(keyPath);
         final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByteArray);
 
         final KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        final PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+        final PrivateKey privateAppKey = keyFactory.generatePrivate(keySpec);
 
         // Create encryption cipher
-        final Cipher rsaECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        final Cipher rsaAppECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        final Cipher rsaAppDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
-        rsaECipherPrivate.init(Cipher.ENCRYPT_MODE, privateKey);
-        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
+        rsaAppECipherPrivate.init(Cipher.ENCRYPT_MODE, privateAppKey);
+        rsaAppDCipherPrivate.init(Cipher.DECRYPT_MODE, privateAppKey);
 
 
 
@@ -185,21 +210,38 @@ public class Server implements Runnable {
                         new DataInputStream(clientSocket.getInputStream())));
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-        // Read in client's ID
-        String clientID = in.readLine();
-
-        boolean proceed = authenticationProtocol(in,out,rsaECipherPrivate, serverCertPath, clientID);
+        /*
+        Right now authentication is only to authenticate that the other party is using a
+        Legitimate Application that has been produced by us.
+         */
+        boolean proceed = authenticationProtocol(in,out,rsaAppECipherPrivate, rsaAppDCipherPrivate, serverCertPath);
 
         if(!proceed){
             System.out.println("Authentication protocol failed!");
             return;
         }
 
-        //TODO: Initialise file transfer requirements - Private and public keys
+        byte[] key = password.getBytes();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        Cipher Dcipher = Cipher.getInstance("AES");
+        Dcipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+        byte[] EpublicKeyBytes = DatatypeConverter.parseBase64Binary(PubPriv[0]);
+        byte[] EprivateKeyBytes = DatatypeConverter.parseBase64Binary(PubPriv[1]);
+        byte[] DpublicKeyBytes = Dcipher.doFinal(EpublicKeyBytes);
+        byte[] DprivateKeyBytes = Dcipher.doFinal(EprivateKeyBytes);
+        final PrivateKey privateKey = keyFactory.generatePrivate(new SecretKeySpec(DprivateKeyBytes,0,DprivateKeyBytes.length,"AES"));
+
+        sendMsg(out, DatatypeConverter.printBase64Binary(DpublicKeyBytes) );
+
+        // Create encryption cipher
+        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
+
 
         // "Waiting for encrypted AES Key from client"
         String AESKeyString = in.readLine();
-        Key AESKey = getAESKey(AESKeyString,rsaDCipherPrivate);
+        byte[] AESKeyByte = Dcipher.doFinal(DatatypeConverter.parseBase64Binary(AESKeyString));
+        Key AESKey = getAESKey(AESKeyByte,rsaDCipherPrivate);
 
         Cipher AESCipher = Cipher.getInstance("AES");
         AESCipher.init(Cipher.DECRYPT_MODE, AESKey);
@@ -223,7 +265,7 @@ public class Server implements Runnable {
             long startTime = System.currentTimeMillis();
 
             String clientsFileName = in.readLine();
-            System.out.println("Received client's file name");
+            // "Received client's file name");
             int clientFileSize = Integer.parseInt(in.readLine());
             System.out.println("File size " + clientFileSize);
             byte[] encryptedDataFile = new byte[clientFileSize];
@@ -249,10 +291,6 @@ public class Server implements Runnable {
             threadExec.execute(decryptionWorker);
 
             clientDone = ACs.CLIENTDONE.equals(in.readLine());
-            System.out.println("Is client Done? " + clientDone);
-            long endTime = System.currentTimeMillis();
-            long elapsedTime = endTime-startTime;
-//			CSVUtils.writeLine(writer, Arrays.asList(Integer.toString(clientFileSize), Long.toString(elapsedTime)));
         }while(!clientDone);
 
         writer.close();
@@ -274,6 +312,13 @@ public class Server implements Runnable {
         fileUploadTimings.put(clientsFileName,System.currentTimeMillis()-startTime);
     }
 
+    /*
+     * args:
+     * 	portNumber
+     * 	private key location
+     * 	Certificate Location
+     *
+     */
     private void main() throws Exception{
 
         int portNum = 7777;	// socket address
@@ -289,7 +334,7 @@ public class Server implements Runnable {
             Runnable OpenConnections = new Runnable(){
                 public void run(){
                     try {
-                        handleRequest(clientSocket);
+                        handleRequest(clientSocket, user, password);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -311,6 +356,5 @@ public class Server implements Runnable {
         }
     }
 }
-
 
 

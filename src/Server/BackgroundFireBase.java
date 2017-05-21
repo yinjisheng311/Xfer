@@ -25,7 +25,7 @@ import java.util.concurrent.RunnableFuture;
 public class BackgroundFireBase{
 
     public final Map<String,String> onlineUsers = new HashMap<>();
-    public static int numReferences = 0;
+    public static int numReferences;
 
 //    private final DatabaseReference ref = FirebaseDatabase
 //                                                .getInstance()
@@ -36,6 +36,7 @@ public class BackgroundFireBase{
     private static BackgroundFireBase instance = null;
 
     private BackgroundFireBase() {
+        numReferences = 0;
         start();
     }
 

@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #282827;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SendFileController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #191b1d;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SendFileController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -40,49 +40,34 @@
          </children>
       </VBox>
    </top>
-   <bottom>
-      <HBox BorderPane.alignment="CENTER">
+   <right>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Label" />
-         </children>
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
-      </HBox>
-   </bottom>
-   <left>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="10.0" prefWidth="200.0" />
-            <HBox alignment="TOP_CENTER" prefHeight="330.0" prefWidth="200.0">
+            <Region prefHeight="200.0" prefWidth="200.0" />
+            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Region prefHeight="200.0" prefWidth="10.0" />
-                  <JFXListView fx:id="fileListView" style="-fx-background-color: grey;" />
+                  <Label fx:id="receiver" text="Nicholas" textFill="WHITE">
+                     <graphic>
+                        <Label alignment="CENTER" text="Sending To:" textFill="WHITE" />
+                     </graphic>
+                  </Label>
                </children>
             </HBox>
-         </children>
-      </VBox>
-   </left>
-   <center>
-      <Region maxWidth="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
-   </center>
-   <right>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-         <children>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <Label fx:id="receiver" alignment="CENTER" text="Sending To:" textFill="#4d4d4d" />
-            <Region prefHeight="200.0" prefWidth="200.0" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
                <image>
-                  <Image url="@cloud-computing.png" />
+                  <Image url="@upload.png" />
                </image>
             </ImageView>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton onAction="#sendFiles" style="-fx-background-color: #4fba6f;" text="Send" />
+            <JFXButton onAction="#sendFiles" prefWidth="100.0" style="-fx-background-color: #4fba6f;" text="Send" />
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton fx:id="homeButton" alignment="TOP_LEFT" style="-fx-background-color: #868e8d;" text="Home" />
+            <JFXButton fx:id="homeButton" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #868e8d;" text="Home" />
             <Region prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
    </right>
+   <center>
+      <ListView fx:id="fileListView" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

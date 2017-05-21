@@ -40,22 +40,12 @@
             </children>
         </VBox>
     </top>
-    <bottom>
-        <HBox BorderPane.alignment="CENTER">
-            <children>
-                <Label text="Label" />
-            </children>
-            <padding>
-                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-            </padding>
-        </HBox>
-    </bottom>
    <center>
-      <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <StackPane fx:id="stackPane" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox>
                <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox>
                      <children>
                         <VBox>
                            <children>
@@ -74,20 +64,24 @@
                               </Label>
                            </children>
                         </VBox>
-                        <Region prefHeight="200.0" prefWidth="200.0" />
+                        <Region HBox.hgrow="ALWAYS" />
                         <VBox alignment="TOP_CENTER">
                            <children>
-                              <JFXButton prefWidth="66.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
+                              <JFXButton onAction="#goToLoginScene" prefWidth="66.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" top="10.0" />
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </JFXButton>
-                              <JFXButton onAction="#receiveFiles" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE" />
+                              <JFXButton onAction="#receiveFiles" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" right="10.0" />
+                                 </VBox.margin></JFXButton>
                            </children>
                         </VBox>
+                        <Region />
                      </children>
                   </HBox>
-                  <JFXListView fx:id="listView" style="-fx-background-color: grey;" />
+                  <ListView fx:id="listView" />
                </children>
             </VBox>
          </children>

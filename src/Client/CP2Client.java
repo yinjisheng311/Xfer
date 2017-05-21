@@ -43,9 +43,9 @@ public class CP2Client implements Runnable {
 		for (int i = 0; i < this.filesToBeSent.size() ; i++) {
 			System.out.println(this.filesToBeSent.get(i).getName());
 		}
-		String hostName = "10.143.9.169";
+		String hostName = "localhost";
 //		String hostName = "localhost";
-		int portNumber = 7777;
+		int portNumber = 6667;
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
 		Socket echoSocket = new Socket();

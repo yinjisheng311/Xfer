@@ -302,7 +302,7 @@ public class ServerClassCP2MultiThread implements Runnable {
 		//String hostName = args[0];
 //		int portNum = Integer.parseInt(args[0]);
 		
-		int portNum = 7777;	// socket address
+		int portNum = 6667;	// socket address
 		ServerSocket serverSocket;		
 		serverSocket = new ServerSocket(portNum);
 		

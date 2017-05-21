@@ -28,6 +28,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.RunnableFuture;
 
 
 public class HomeController implements Initializable {
@@ -45,6 +46,24 @@ public class HomeController implements Initializable {
         enteredUser = "";
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
         System.out.println(firebaseSingleton.onlineUsers.toString());
+        System.out.println("While initialising home controller, firebase ref : " + firebaseSingleton.numReferences);
+
+        Runnable firebaseThread = new Runnable() {
+            @Override
+            public void run() {
+                BackgroundFireBase fireBase = BackgroundFireBase.getInstance();
+                while (true){
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    populateList(fireBase.onlineUsers);
+                }
+            }
+        };
+
+//        new Thread(firebaseThread).start();
 
         Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
         while (it.hasNext()) {
@@ -78,6 +97,29 @@ public class HomeController implements Initializable {
 
 
     }
+
+    private void populateList( Map<String, String> onlineUsers) {
+        System.out.println(onlineUsers.toString());
+        for (int i = 0; i < onlineUsers.size(); i++) {
+            System.out.println(onlineUsers.get(i));
+        }
+
+        //testing
+        Iterator it = onlineUsers.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry) it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+            try {
+                Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
+                this.listView.getItems().add(lbl);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void goToSendFileScene() throws IOException {
         Parent send_file_page_parent = FXMLLoader.load(getClass().getResource("send-file.fxml"));
         Scene send_file_page_scene = new Scene(send_file_page_parent);
@@ -106,19 +148,20 @@ public class HomeController implements Initializable {
 
 
     // to fetch the list of all online users currently
-    public void populateList(){
-        Main.firebaseSingleton = BackgroundFireBase.getInstance();
+    public void populateList() {
+
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
 //        String user1 = firebaseSingleton.onlineUsers.get(0);
 //        System.out.println(user1);
-        System.out.println(Main.firebaseSingleton.onlineUsers.toString());
-        for(int i=0 ; i < Main.firebaseSingleton.onlineUsers.size(); i ++){
-            System.out.println(Main.firebaseSingleton.onlineUsers.get(i));
+        System.out.println(firebaseSingleton.onlineUsers.toString());
+        for (int i = 0; i < firebaseSingleton.onlineUsers.size(); i++) {
+            System.out.println(firebaseSingleton.onlineUsers.get(i));
         }
 
         //testing
         Iterator it = firebaseSingleton.onlineUsers.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
             System.out.println(pair.getKey() + " = " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
             try {
@@ -130,6 +173,7 @@ public class HomeController implements Initializable {
             }
         }
     }
+
 
 
 

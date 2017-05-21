@@ -55,6 +55,7 @@ public class Main extends Application {
 
         // to make firebase load first
         kickstartFirebase();
+        System.out.println("At main start() firebase ref : " + firebaseSingleton.numReferences);
 
 
     }
@@ -118,6 +119,7 @@ public class Main extends Application {
                 // Fetch from firebase and compare the string
 //                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
                 String firebaseData = firebaseSingleton.Authenticate(finalUsername);
+                System.out.println("While kick starting firebase, firebase ref : "+firebaseSingleton.numReferences);
 
                 if (firebaseData.equals(base64format)){
                     System.out.println("succeeded");

@@ -24,7 +24,8 @@ import java.util.concurrent.RunnableFuture;
  */
 public class BackgroundFireBase{
 
-    public Map<String,String> onlineUsers;
+    public final Map<String,String> onlineUsers = new HashMap<>();
+    public static int numReferences = 0;
 
 //    private final DatabaseReference ref = FirebaseDatabase
 //                                                .getInstance()
@@ -42,7 +43,9 @@ public class BackgroundFireBase{
         if(instance == null) {
             instance = new BackgroundFireBase();
         }
+        numReferences ++;
         return instance;
+//        return new BackgroundFireBase();
     }
 
     private void start() {
@@ -66,7 +69,7 @@ public class BackgroundFireBase{
                 .getInstance()
                 .getReference("/");
 
-        onlineUsers = new HashMap<String,String>();
+//        onlineUsers = new HashMap<String,String>();
 
         ref = FirebaseDatabase
                         .getInstance()
@@ -79,8 +82,10 @@ public class BackgroundFireBase{
                 System.out.println("Child Added");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 if((boolean) userHandle.get("Online")){
+                    System.out.println("Added newly added child");
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
+                    System.out.println("Removed added child");
                     onlineUsers.remove(dataSnapshot.getKey());
                 }
             }
@@ -90,8 +95,10 @@ public class BackgroundFireBase{
                 System.out.println("Online Changed");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
                 if((boolean) userHandle.get("Online")){
+                    System.out.println("Added changed Child");
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
                 }else{
+                    System.out.println("Removed changed child");
                     onlineUsers.remove(dataSnapshot.getKey());
                 }
             }
@@ -117,6 +124,7 @@ public class BackgroundFireBase{
             @Override
             public void run() {
                 while (true){
+                    System.out.println(Thread.currentThread().getName());
                     System.out.println(onlineUsers.toString());
                     try {
                         Thread.sleep(10000);
@@ -127,7 +135,7 @@ public class BackgroundFireBase{
             }
         };
 
-//        new Thread(test).start();
+        new Thread(test).start();
 
     }
 

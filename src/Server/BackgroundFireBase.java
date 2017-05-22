@@ -200,6 +200,24 @@ public class BackgroundFireBase{
         return PubPriv;
     }
 
+    public void setOnline(String user) throws UnknownHostException {
+        DatabaseReference userRef = ref.child(user);
+        Map<String, Object> userUpdates = new HashMap<String, Object>();
+        userUpdates.put("IPAddress", InetAddress.getLocalHost());
+        userUpdates.put("Online",true);
+
+        userRef.updateChildren(userUpdates);
+    }
+
+    public void setOffline(String user){
+        DatabaseReference userRef = ref.child(user);
+        Map<String, Object> userUpdates = new HashMap<String, Object>();
+        userUpdates.put("IPAddress", "null");
+        userUpdates.put("Online",false);
+
+        userRef.updateChildren(userUpdates);
+    }
+
 }
 
 class User{

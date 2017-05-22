@@ -50,28 +50,33 @@
                         <Font size="48.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="20.0" />
+                        <Insets top="25.0" />
                      </VBox.margin>
+                  </Label>
+                  <Label text="S E C U R E  F I L E  T R A N S F E R" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
                   </Label>
                   <HBox alignment="CENTER">
                      <children>
                         <Label text="Status: Available" textFill="WHITE">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
                            <HBox.margin>
                               <Insets left="15.0" right="15.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                        <JFXButton onAction="#receiveFiles" prefWidth="100.0" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
+                        <JFXButton onAction="#receiveFiles" prefWidth="70.0" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
                            <HBox.margin>
                               <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton onAction="#goToLoginScene" prefWidth="100.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
+                        <JFXButton onAction="#goToLoginScene" prefWidth="70.0" style="-fx-background-color: red;" text="Logout" textFill="WHITE">
                            <HBox.margin>
-                              <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                              <Insets bottom="20.0" left="10.0" right="20.0" top="20.0" />
                            </HBox.margin>
                         </JFXButton>
                         <Region />

@@ -159,7 +159,7 @@ public class SendFileController implements Initializable {
         Matcher m = IPPattern.matcher(rawData);
         String IPAddress = null;
         while (m.find()){
-            IPAddress = m.group(1);
+            IPAddress = m.group(0);
         }
         Runnable client = new Client(user,fileList,IPAddress);
         new Thread(client).start();

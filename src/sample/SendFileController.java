@@ -6,9 +6,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.Animation;
+import javafx.animation.Transition;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,12 +22,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -42,7 +51,7 @@ public class SendFileController implements Initializable {
     private JFXButton homeButton;
 
     @FXML
-    private JFXListView<Label> fileListView;
+    private ListView<Label> fileListView;
 
     @FXML
     private Label receiver;
@@ -68,6 +77,7 @@ public class SendFileController implements Initializable {
         //only if it is a file, not html etc
         if(event.getDragboard().hasFiles()){
             event.acceptTransferModes(TransferMode.ANY);
+
         }
 
     }
@@ -75,15 +85,41 @@ public class SendFileController implements Initializable {
     private void handleDrop(DragEvent event) throws FileNotFoundException {
         System.out.println("something dropped");
 
+        //TODO: load gif for one cycle
+        Image uploadGif = new Image(getClass().getResourceAsStream("upload.gif"));
+        this.imageView.setImage(uploadGif);
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(3500);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                Image uploadImg = new Image(getClass().getResourceAsStream("upload.png"));
+                imageView.setImage(uploadImg);
+            }
+        });
+        new Thread(sleeper).start();
+
+
         String fileName;
         List<File> files = event.getDragboard().getFiles();
         for (int i = 0; i < files.size(); i++) {
             this.fileList.add(files.get(i));
             fileName = files.get(i).getName();
             Label lbl = new Label("File Name: " + fileName);
+            System.out.println(fileName);
             this.fileListView.getItems().add(lbl);
+
         }
         System.out.println(files);
+
 //        this.fileList.add(files.get(0));
 //        String fileName = files.get(0).getName();
 
@@ -96,6 +132,9 @@ public class SendFileController implements Initializable {
         // the code below can change the image
 //        this.imageView.setImage(img);
     }
+
+
+
     private void goHome() throws IOException {
         Parent send_file_page_parent = FXMLLoader.load(getClass().getResource("home.fxml"));
         Scene send_file_page_scene = new Scene(send_file_page_parent);
@@ -117,3 +156,5 @@ public class SendFileController implements Initializable {
 
 
 }
+
+

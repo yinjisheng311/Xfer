@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -39,7 +40,7 @@ public class HomeController implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private JFXListView<Label> listView;
+    private ListView<Label> listView;
 
     public static String enteredUser;
 
@@ -88,7 +89,7 @@ public class HomeController implements Initializable {
             }
         });
 
-
+//        receiveFiles();
     }
 
     private void populateList( Map<String, String> onlineUsers) {
@@ -119,6 +120,18 @@ public class HomeController implements Initializable {
         send_file_page_scene.getStylesheets().add(getClass().getResource("lisStyles.css").toExternalForm());
         Stage app_stage = (Stage) this.listView.getScene().getWindow();
         app_stage.setScene(send_file_page_scene);
+        app_stage.show();
+    }
+
+    public void goToLoginScene() throws IOException {
+        //TODO: logs the user out of the firebase as well
+
+
+        Parent login_page_parent = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Scene login_page_scene = new Scene(login_page_parent);
+        login_page_scene.getStylesheets().add(getClass().getResource("lisStyles.css").toExternalForm());
+        Stage app_stage = (Stage) this.listView.getScene().getWindow();
+        app_stage.setScene(login_page_scene);
         app_stage.show();
     }
 

@@ -14,7 +14,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<BorderPane style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<BorderPane style="-fx-background-color: #191b1d;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -36,19 +36,6 @@
         </menus>
       </MenuBar>
    </top>
-   <bottom>
-      <Label text="InsertAppName©2017" BorderPane.alignment="CENTER_LEFT">
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-         </BorderPane.margin>
-         <font>
-            <Font size="9.0" />
-         </font>
-      </Label>
-   </bottom>
    <center>
       <StackPane fx:id="stackPane" prefHeight="150.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
@@ -63,12 +50,12 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <JFXTextField fx:id="username" focusColor="#2d89c6" promptText="Username">
+                  <JFXTextField fx:id="username" focusColor="WHITE" promptText="Username" style="-fx-text-fill: #ffffff;">
                      <VBox.margin>
                         <Insets bottom="5.0" left="40.0" right="40.0" top="10.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <JFXPasswordField fx:id="password" promptText="Password">
+                  <JFXPasswordField fx:id="password" focusColor="WHITE" promptText="Password" style="-fx-text-fill: #ffffff;">
                      <VBox.margin>
                         <Insets bottom="5.0" left="40.0" right="40.0" top="10.0" />
                      </VBox.margin>
@@ -80,7 +67,7 @@
                         <JFXButton fx:id="signup" buttonType="RAISED" prefHeight="37.0" prefWidth="81.0" ripplerFill="WHITE" style="-fx-background-color: #868e8d;" text="Sign Up" textFill="WHITE" />
                      </children>
                      <VBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="15.0" left="8.0" right="8.0" top="8.0" />
                      </VBox.margin>
                   </HBox>
                </children>

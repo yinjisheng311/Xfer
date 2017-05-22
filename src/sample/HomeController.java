@@ -1,37 +1,31 @@
 package sample;
 
 import Server.BackgroundFireBase;
-import Server.ServerClassCP2MultiThread;
-import com.jfoenix.controls.*;
+import Server.Server;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.concurrent.RunnableFuture;
 
 
 public class HomeController implements Initializable {
@@ -166,14 +160,13 @@ public class HomeController implements Initializable {
 
     }
 
-    public void receiveFiles(){
-
-        Runnable server = new ServerClassCP2MultiThread();
+    public void receiveFiles(){;
+        Runnable server = new Server();
         new Thread(server).start();
 
         // TODO: if there is a request to send, pop up the dialog
 
-        JFXDialogLayout content = new JFXDialogLayout();
+                JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text("Send Request"));
         // TODO: make the name of the sender appear
         content.setBody(new Text("Someone wants to send you files"));

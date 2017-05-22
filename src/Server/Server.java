@@ -204,6 +204,15 @@ public class Server implements Runnable {
         // Read in client's ID
         String clientID = in.readLine();
         // TODO: Prompt the user if they want to accept the files
+        boolean accept;
+        accept = true;
+        if(!accept){
+            sendMsg(out,"");
+            System.out.println("User rejected transfer!");
+            return;
+        }
+
+        sendMsg(out,"accept");
 
         boolean proceed = authenticationProtocol(in,out,rsaECipherPrivate, serverCertPath);
 

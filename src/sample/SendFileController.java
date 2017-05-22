@@ -155,12 +155,14 @@ public class SendFileController implements Initializable {
 //        Runnable client = new CP2Client(this.fileList);
 //        Runnable client = new CP2Client(this.fileList);
         String rawData = HomeController.enteredUser;
-        Pattern IPPattern = Pattern.compile("[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}$");
+        Pattern IPPattern = Pattern.compile("[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}$||localhost");
         Matcher m = IPPattern.matcher(rawData);
         String IPAddress = null;
         while (m.find()){
             IPAddress = m.group(0);
+            System.out.println("Inside loop, IPAddress is "+ IPAddress);
         }
+        System.out.println("IPAddress is "+IPAddress);
         Runnable client = new Client(user,fileList,IPAddress);
         new Thread(client).start();
 

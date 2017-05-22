@@ -8,6 +8,9 @@ Nicholas Yeow Teng Mun (1001490)
 
 Yin Ji Sheng (1001670)
 
+## How to Run the Application on Intellij IDEA:
+On Intellij, run the Main.java file and the application should load. While loading, the Firebase will be kickstarted and this will take about 4 seconds. There will be a nullpointer Exception printed in the console initially but that is okay. That error was caused by kickstarting the firebase without a valid user input. After which, the Login Page will be displayed and user can proceed as per normal to send or receive files.
+
 ## Graphical User Interface (GUI):
 This application's GUI was created using JavaFx, along with JFoenix's Material Design library. All of the pages are designed to be change dynamically with window sizes. Below are a few screenshots of the application:
 
@@ -50,9 +53,6 @@ CP1 implements asymmetric key cryptography using RSA.
 CP2 implements symmetric key cryptography using AES.
 
 To compare the performance between the 2 different confidentiality protocols,their respective runtimes are computed and plotted in a graph to compare their speeds. The outcomes can be found at the last section of this page.  
-
-## How to Compile the program on Intellij IDEA:
-To compile the program on Intellij IDEA, one should have two different machines with an active Internet connection. Before running the program, one must configure the I.P address to which the client will attempt to connect to the server. This parameters are parsed to the client and server programs via the command line. This can either be done in Eclipse or via the Command line. 
 
 ### Things to note when running the program
 

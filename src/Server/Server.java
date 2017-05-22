@@ -256,7 +256,11 @@ public class Server implements Runnable {
         final Executor threadExec = Executors.newFixedThreadPool(NTHREADS);
         final Phaser phaser = new Phaser();
         phaser.register();	// Registers current thread
+        Integer numFilesExpected = Integer.parseInt(in.readLine());
         do{
+            if(numFilesExpected==0){
+                break;
+            }
             long startTime = System.currentTimeMillis();
 
             String clientsFileName = in.readLine();
@@ -303,7 +307,15 @@ public class Server implements Runnable {
         encryptedDataFile = DatatypeConverter.parseBase64Binary(clientEncryptedFileString);
 
         byte[] clientDecryptedFileBytes = decryptFile(encryptedDataFile,AESDCipher);
-        FileOutputStream fileOutput = new FileOutputStream("ReceivedFile\\"+clientsFileName);
+        System.out.println(clientsFileName);
+        clientsFileName = clientsFileName.replace("\\",",");
+        System.out.println(clientsFileName);
+        String [] temp = clientsFileName.split(",");
+        File directory = new File("ReceivedFile");
+        if(!directory.exists()){
+            directory.mkdir();
+        }
+        FileOutputStream fileOutput = new FileOutputStream("ReceivedFile\\"+temp[temp.length-1]);
         fileOutput.write(clientDecryptedFileBytes, 0, clientDecryptedFileBytes.length);
         fileOutput.close();
         System.out.println("Successfully saved client's file : "+clientsFileName);

@@ -263,10 +263,13 @@ public class Client implements Runnable {
 //			}
 //		}
 
-        String[] fileList = {}; //{"largeFile.txt","medianFile.txt","smallFile.txt"};
-        for(int i = 0; i <fileList.length;i++){
+//        String[] fileList = {}; //{"largeFile.txt","medianFile.txt","smallFile.txt"};
+
+        //Inform server about number of files sent
+        out.println(fileArrayList.size());
+        for(int i = 0; i <fileArrayList.size();i++){
             //tell server this is the starting time
-            File fileToBeSent = new File(fileList[i]);
+            File fileToBeSent = fileArrayList.get(i);
             byte[] fileBytes = new byte[(int)fileToBeSent.length()];
             BufferedInputStream fileInput = new BufferedInputStream(new FileInputStream(fileToBeSent));
             fileInput.read(fileBytes,0,fileBytes.length);
@@ -277,16 +280,17 @@ public class Client implements Runnable {
             Ecipher2.init(Cipher.ENCRYPT_MODE, key);
             byte[] encryptedFile = encryptFile(fileBytes, Ecipher2);
 
-            out.println(fileList[i]);
+            out.println(fileArrayList.get(i));
             out.println(Integer.toString(encryptedFile.length));
             out.println(DatatypeConverter.printBase64Binary(encryptedFile));
-            System.out.println("successfully sent over " + fileList[i]);
-            if((i+1)<fileList.length) {
+            System.out.println("successfully sent over " + fileArrayList.get(i));
+            if((i+1)<fileArrayList.size()) {
                 out.println(ACs.CLIENTONEFILESENT);
             }else{
-                out.println(ACs.CLIENTDONE);
+                break;
             }
         }
+        out.println(ACs.CLIENTDONE);
 
         System.out.println("told server all ecnrypted files are sent");
 

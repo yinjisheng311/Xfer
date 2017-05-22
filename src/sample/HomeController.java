@@ -160,7 +160,7 @@ public class HomeController implements Initializable {
 
     }
 
-    public void receiveFiles(){;
+    public void receiveFiles(){
         Runnable server = new Server();
         new Thread(server).start();
 

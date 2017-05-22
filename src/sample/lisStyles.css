@@ -1,6 +1,6 @@
 .list-view .list-cell:even {
-
+    -fx-cell-size: 35px;
 }
 .list-view .list-cell:odd {
-
+    -fx-cell-size: 35px;
 }

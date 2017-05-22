@@ -50,7 +50,7 @@ public class Main extends Application {
         firebaseSingleton = BackgroundFireBase.getInstance();
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        window.setTitle("Xfer Without Trudy");
+        window.setTitle("Xfer");
         window.setScene(new Scene(root, 600,400));
         window.show();
         window.setOnCloseRequest(event -> {

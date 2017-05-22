@@ -3,6 +3,8 @@ package Server;
 import Client.CP2Client;
 import Client.Client;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +20,7 @@ public class TestServerClient {
 //        new Thread(client).start();
 
 //        Runnable server = new Server();
-        Runnable client = new Client("user", new ArrayList<>());
+        Runnable client = new Client("user", new ArrayList<File>(), null);
 
 //        new Thread(server).start();
         new Thread(client).start();

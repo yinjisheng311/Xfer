@@ -43,11 +43,14 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" scaleX="0.5" scaleY="0.5">
-                           <image>
-                              <Image url="@shield.png" />
-                           </image>
-                        </ImageView>
+                        <Label text="X F E R" textFill="#868e8d">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </HBox.margin>
+                        </Label>
                      </children>
                   </HBox>
                   <JFXTextField fx:id="username" focusColor="WHITE" promptText="Username" style="-fx-text-fill: #ffffff;">
@@ -67,7 +70,7 @@
                         <JFXButton fx:id="signup" buttonType="RAISED" prefHeight="37.0" prefWidth="81.0" ripplerFill="WHITE" style="-fx-background-color: #868e8d;" text="Sign Up" textFill="WHITE" />
                      </children>
                      <VBox.margin>
-                        <Insets bottom="15.0" left="8.0" right="8.0" top="8.0" />
+                        <Insets bottom="30.0" left="15.0" right="8.0" top="15.0" />
                      </VBox.margin>
                   </HBox>
                </children>

@@ -71,7 +71,7 @@
                      <children>
                         <JFXButton fx:id="login" buttonType="RAISED" onAction="#authenticate" prefHeight="37.0" prefWidth="81.0" ripplerFill="WHITE" style="-fx-background-color: #4fba6f;" text="Login" textFill="WHITE" />
                         <Region prefWidth="100.0" />
-                        <JFXButton fx:id="signup" buttonType="RAISED" prefHeight="37.0" prefWidth="81.0" ripplerFill="WHITE" style="-fx-background-color: #868e8d;" text="Sign Up" textFill="WHITE" />
+                        <JFXButton fx:id="signup" buttonType="RAISED" onAction="#createUser" prefHeight="37.0" prefWidth="81.0" ripplerFill="WHITE" style="-fx-background-color: #868e8d;" text="Sign Up" textFill="WHITE" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="30.0" left="15.0" right="8.0" top="15.0" />

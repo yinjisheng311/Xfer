@@ -179,7 +179,8 @@ public class LoginController implements Initializable {
 
     @FXML
     void createUser(ActionEvent event) throws UnknownHostException {
-        if(BackgroundFireBase.getInstance().userList.contains(username)){
+        System.out.println("CREATE USER!!!!!");
+        if(!BackgroundFireBase.getInstance().userList.contains(username)){
             //AES the password
             // Generate the secret key specs.
             byte[] user = this.username.getText().getBytes();

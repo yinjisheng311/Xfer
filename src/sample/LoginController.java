@@ -23,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -162,6 +163,12 @@ public class LoginController implements Initializable {
         }
 
         System.out.println("Finished authentication");
+        loginFirebase(username);
+    }
+
+    private void loginFirebase(String username) throws UnknownHostException {
+        BackgroundFireBase instance = BackgroundFireBase.getInstance();
+        instance.setOnline(username);
     }
 
     @Override

@@ -1,9 +1,6 @@
 package Server;
 
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
+import java.net.*;
 
 /**
  * Created by nicholas on 21-May-17.
@@ -75,9 +72,9 @@ public class TestServer{
 //        Socket s = new Socket();
 //        s.connect(SA,8080);
         // Client
-        String hostname = "10.143.9.169";
-        Socket s = new Socket(hostname,6667);
-        System.out.println("Connected");
+//        String hostname = "10.143.9.169";
+//        Socket s = new Socket(hostname,6667);
+//        System.out.println("Connected");
 //        String hostname = "192.168.1.41";
 //        Socket s = new Socket(hostname,7777);
 //        System.out.println("Connected");
@@ -85,5 +82,10 @@ public class TestServer{
         // Server
 //        ServerSocket s = new ServerSocket(6667);
 //        s.accept();
+        String nullString = null;
+        while (NetworkInterface.getNetworkInterfaces().hasMoreElements()){
+            System.out.println(NetworkInterface.getNetworkInterfaces().nextElement());
+        }
+
     }
 }

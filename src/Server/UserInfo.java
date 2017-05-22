@@ -25,4 +25,8 @@ public class UserInfo {
         return user;
     }
 
+    public void resetInstance(){
+        instance = null;
+    }
+
 }

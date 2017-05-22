@@ -1,7 +1,9 @@
 package sample;
 
 import Client.CP2Client;
+import Client.Client;
 import Server.ServerClassCP2MultiThread;
+import Server.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
@@ -39,10 +41,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SendFileController implements Initializable {
 
     ArrayList<File> fileList;
+    String user;
 
     @FXML
     private ImageView imageView;
@@ -61,6 +66,7 @@ public class SendFileController implements Initializable {
         // instantiate fileList
         this.receiver.setText(HomeController.enteredUser);
         this.fileList = new ArrayList<>();
+        this.user = UserInfo.getInstance().getUser();
 
         homeButton.setOnAction(e -> {
             try {
@@ -147,7 +153,15 @@ public class SendFileController implements Initializable {
         System.out.println(this.fileList.toString());
         // get files from fileList and send them out
 //        Runnable client = new CP2Client(this.fileList);
-        Runnable client = new CP2Client(this.fileList);
+//        Runnable client = new CP2Client(this.fileList);
+        String rawData = HomeController.enteredUser;
+        Pattern IPPattern = Pattern.compile("[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}$");
+        Matcher m = IPPattern.matcher(rawData);
+        String IPAddress = null;
+        while (m.find()){
+            IPAddress = m.group(1);
+        }
+        Runnable client = new Client(user,fileList,IPAddress);
         new Thread(client).start();
 
     }

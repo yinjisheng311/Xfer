@@ -67,7 +67,7 @@ public class Server implements Runnable {
         return false;
     }
 
-    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, String serverCertPath, String clientID) throws Exception{
+    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, String serverCertPath) throws Exception{
 
         System.out.println("Starting authentication protocol");
 
@@ -203,15 +203,15 @@ public class Server implements Runnable {
 
         // Read in client's ID
         String clientID = in.readLine();
+        // TODO: Prompt the user if they want to accept the files
 
-        boolean proceed = authenticationProtocol(in,out,rsaECipherPrivate, serverCertPath, clientID);
+        boolean proceed = authenticationProtocol(in,out,rsaECipherPrivate, serverCertPath);
 
         if(!proceed){
             System.out.println("Authentication protocol failed!");
             return;
         }
 
-        //TODO: Initialise file transfer requirements - Private and public keys
         // Generate keypair here
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(1024);

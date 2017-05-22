@@ -3,6 +3,8 @@ package Server;
 import Client.CP2Client;
 import Client.Client;
 
+import java.util.ArrayList;
+
 /**
  * Created by nicholas on 21-May-17.
  */
@@ -15,10 +17,10 @@ public class TestServerClient {
 //        new Thread(server).start();
 //        new Thread(client).start();
 
-        Runnable server = new Server();
-        Runnable client = new Client("user", "user");
+//        Runnable server = new Server();
+        Runnable client = new Client("user", new ArrayList<>());
 
-        new Thread(server).start();
+//        new Thread(server).start();
         new Thread(client).start();
     }
 }

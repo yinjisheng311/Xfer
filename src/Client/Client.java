@@ -22,17 +22,20 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 
 public class Client implements Runnable {
 
     public final String user;
-    public final String password;
+    public final ArrayList<File> fileArrayList;
+    public final String hostName;
 
-    public Client(String user, String password){
+    public Client(String user, ArrayList<File> fileArrayList, String hostName){
         this.user = user;
-        this.password = password;
+        this.fileArrayList = fileArrayList;
+        this.hostName = hostName;
     }
 
     private static PublicKey getPublicKey(String key){
@@ -52,8 +55,8 @@ public class Client implements Runnable {
 
     private void main() throws Exception {
         System.out.println("CP2: trying to connect");
-        //String hostName = "10.12.21.29";
-        String hostName = "localhost";
+//        String hostName = "10.12.21.29";
+//        String hostName = "localhost";
         int portNumber = 7777;
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
@@ -67,6 +70,14 @@ public class Client implements Runnable {
         // Tell Server my Identity
         out.println(user);
         out.flush();
+
+        // Wait for server to accept my send request, terminate if rejected
+        String serverAccept = in.readLine();
+        // TODO: handle server response
+        // Send response to user if the server denys connection and stop client
+        if(!serverAccept.equals("")){
+            return;
+        }
 
         //send nonce as the message for the server to encrypt, to make sure no playback attack can take place
         byte[] nonce = new byte[32];
@@ -305,6 +316,10 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
+        if(hostName==null){
+            System.out.println("INVALID HOSTNAME");
+            return;
+        }
         try {
             main();
         } catch (Exception e) {

@@ -9,7 +9,12 @@ Nicholas Yeow Teng Mun (1001490)
 Yin Ji Sheng (1001670)
 
 ## Graphical User Interface (GUI):
-This application's GUI was created using JavaFx, along with JFoenix's Material Design library. Below are a few screenshots of the application. 
+This application's GUI was created using JavaFx, along with JFoenix's Material Design library. Below are a few screenshots of the application:
+![Login Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.35.53%20PM.png "Login Page")
+![Home Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.38%20PM.png "Home Page")
+![Send File Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.23%20PM.png "Send File Page")
+
+All of the pages are designed to be change dynamically with window sizes.
 
 ## Specifications of the Protocols:
 This program is split into two main parts, ensuring authentication and confidentality. The first part of the protocol will authenticate both the server to the client, and vice-versa. This will make sure both of them are the intended sender and recipient. After authentication, the next objective would be to securely transmit a file from the client to the authenticated server. This is done via encryption, where the client will send an encrypted file to the authenticated server. Below is a sample Authentication Protocol to be implemented, as given in the handout. 

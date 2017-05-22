@@ -10,9 +10,20 @@ Yin Ji Sheng (1001670)
 
 ## Graphical User Interface (GUI):
 This application's GUI was created using JavaFx, along with JFoenix's Material Design library. All of the pages are designed to be change dynamically with window sizes. Below are a few screenshots of the application:
+
 ![Login Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.35.53%20PM.png "Login Page")
 ![Home Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.38%20PM.png "Home Page")
 ![Send File Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.23%20PM.png "Send File Page")
+
+## How to Send:
+1. Login with a registered username and password. (Use "user" as username and "user" as password) If login is successful, you will be brought to the Home Page, where all the currently online users are displayed.
+2. Click on the user that you intend to send the file to and you will be brought to the Send File Page.
+3. Drag and drop the files that you want to send to this user. Currently, all file types are supported. The files that you have dropped will be displayed on the list view on the left. Click "send" when you have dropped all your files.
+4. The intended receiver will receive a popup that asks if he or she wants to accept the files from you or not. If yes, then the files will be transferred to him or her.
+
+## How to Receive:
+1. Login with a registered username and password. (Use "user" as username and "user" as password) If login is successful, you will be brought to the Home Page, where all the currently online users are displayed.
+2. Here at the Home Page, you will wait for a popup that asks you if you want to receive files from another user. If you click yes, the files will be downloaded.
 
 ## Specifications of the Protocols:
 This program is split into two main parts, ensuring authentication and confidentality. The first part of the protocol will authenticate both the server to the client, and vice-versa. This will make sure both of them are the intended sender and recipient. After authentication, the next objective would be to securely transmit a file from the client to the authenticated server. This is done via encryption, where the client will send an encrypted file to the authenticated server. Below is a sample Authentication Protocol to be implemented, as given in the handout. 

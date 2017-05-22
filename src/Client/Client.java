@@ -21,6 +21,7 @@ import java.security.*;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Random;
 
@@ -29,9 +30,24 @@ public class Client implements Runnable {
     public final String user;
     public final String password;
 
-    Client(String user, String password){
+    public Client(String user, String password){
         this.user = user;
         this.password = password;
+    }
+
+    private static PublicKey getPublicKey(String key){
+        try{
+            byte[] byteKey = Base64.getDecoder().decode(key);
+            X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+
+            return kf.generatePublic(X509publicKey);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private void main() throws Exception {
@@ -137,12 +153,12 @@ public class Client implements Runnable {
         ClientCertFileInput.close();
 
 
-        //generate keypair here
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-        keyGen.initialize(1024);
-        KeyPair keyPair = keyGen.generateKeyPair();
-        Key publicKey = keyPair.getPublic();
-        Key privateKey = keyPair.getPrivate();
+//        //generate keypair here
+//        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+//        keyGen.initialize(1024);
+//        KeyPair keyPair = keyGen.generateKeyPair();
+//        Key publicKey = keyPair.getPublic();
+//        Key privateKey = keyPair.getPrivate();
 
         //receive nonce from server
         byte[] serverNonceInBytes = new byte[32];
@@ -150,16 +166,16 @@ public class Client implements Runnable {
         serverNonceInBytes = DatatypeConverter.parseBase64Binary(serverNonce);
         System.out.println("received nonce from server: " + serverNonce);
 
-        //encrypt nonce using client private key and send it back to server
-        Cipher Ecipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        Ecipher.init(Cipher.ENCRYPT_MODE, privateKey);
-        byte[] encryptedServerNonce = Ecipher.doFinal(serverNonceInBytes);
+        //encrypt nonce using client App private key and send it back to server
+//        Cipher Ecipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        Ecipher.init(Cipher.ENCRYPT_MODE, privateKey);
+        byte[] encryptedServerNonce = ApprsaECipherPrivate.doFinal(serverNonceInBytes);
         out.println(DatatypeConverter.printBase64Binary(encryptedServerNonce));
         out.flush();
         System.out.println("sent encrypted nonce to server");
 
 
-        //wait for server to ask for public key, send public key to server
+        //wait for server to ask for App public key, send App public key to server
         String requestForPublic = in.readLine();
         if (!requestForPublic.equals(ACs.REQUESTCLIENTPUBLICKEY)){
             out.println("you didn't ask for the public key");
@@ -172,7 +188,12 @@ public class Client implements Runnable {
         }
 
 
-        String encodedKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+//        String encodedKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+        // Tell Server the size of client app cert
+        out.println(Integer.toString(certBytes.length));
+        out.flush();
+        // Send the actual cert as a string
+        String encodedKey = DatatypeConverter.printBase64Binary(certBytes);
         out.println(encodedKey);
         out.flush();
         System.out.println("sent public key to server");
@@ -190,11 +211,18 @@ public class Client implements Runnable {
 
         System.out.println("initialising handshake");
 
+        // Read in Server public key
+        String serverPublicKeyString = in.readLine();
+        Cipher rsaECipherServerPublic = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+
+        Key serverPublicKey = getPublicKey(serverPublicKeyString);
+        rsaECipherServerPublic.init(Cipher.ENCRYPT_MODE, serverPublicKey);
+
         //generate secret key using AES algorithm, encrypt it with server's public key, send it to server
         SecretKey key = KeyGenerator.getInstance("AES").generateKey();
-        Cipher aesCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        aesCipher.init(Cipher.ENCRYPT_MODE, CAkey);
-        byte[] encryptedKey = aesCipher.doFinal(key.getEncoded());
+//        Cipher aesCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        aesCipher.init(Cipher.ENCRYPT_MODE, CAkey);
+        byte[] encryptedKey = rsaECipherServerPublic.doFinal(key.getEncoded());
         out.println(DatatypeConverter.printBase64Binary(encryptedKey));
         out.flush();
         System.out.println("finished sending secret symmetric key");
@@ -224,7 +252,7 @@ public class Client implements Runnable {
 //			}
 //		}
 
-        String[] fileList = {"largeFile.txt","medianFile.txt","smallFile.txt"};
+        String[] fileList = {}; //{"largeFile.txt","medianFile.txt","smallFile.txt"};
         for(int i = 0; i <fileList.length;i++){
             //tell server this is the starting time
             File fileToBeSent = new File(fileList[i]);

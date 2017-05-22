@@ -10,6 +10,7 @@ import CSV.CSVUtils;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.*;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -64,7 +67,7 @@ public class Server implements Runnable {
         return false;
     }
 
-    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, String serverCertPath, String clientID) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+    private static boolean authenticationProtocol(BufferedReader in, PrintWriter out, Cipher rsaECipher, String serverCertPath, String clientID) throws Exception{
 
         System.out.println("Starting authentication protocol");
 
@@ -113,13 +116,26 @@ public class Server implements Runnable {
         // "Requesting for client public key"
         sendMsg(out,ACs.REQUESTCLIENTPUBLICKEY);
 
-        // Receiving client's public key
-        String clientPublicKeyString = in.readLine();
+        // Receiving client's Certificate
+        String sizeInString = in.readLine();
+        int certificateSize = Integer.parseInt(sizeInString);
+        byte[] clientCert = new byte[certificateSize];
+        String clientCertString = in.readLine();
+        clientCert = DatatypeConverter.parseBase64Binary(clientCertString);
+
+        // Extrat public key from client cert
+        FileOutputStream fileOutput = new FileOutputStream("ClientAppCert.crt");
+        fileOutput.write(clientCert,0,clientCert.length);
+        FileInputStream clientAppCertFileInput = new FileInputStream("ClientAppCert.crt");
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+        X509Certificate clientAppCert = (X509Certificate) cf.generateCertificate(clientAppCertFileInput);
+        PublicKey clientAppPublicKey = clientAppCert.getPublicKey();
+        clientAppCert.checkValidity();
 
         Cipher rsaDCipherClientPublic = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
-        Key clientPublicKey = getPublicKey(clientPublicKeyString);
-        rsaDCipherClientPublic.init(Cipher.DECRYPT_MODE, clientPublicKey);
+//        Key clientPublicKey = getPublicKey(clientPublicKeyString);
+        rsaDCipherClientPublic.init(Cipher.DECRYPT_MODE, clientAppPublicKey);
 
         byte[] decryptedServerNonce = rsaDCipherClientPublic.doFinal(encryptedServerNonce);
         String decryptedNonceString = new String(decryptedServerNonce, "UTF-16");
@@ -173,10 +189,10 @@ public class Server implements Runnable {
 
         // Create encryption cipher
         final Cipher rsaECipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+//        final Cipher rsaDCipherPrivate = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
         rsaECipherPrivate.init(Cipher.ENCRYPT_MODE, privateKey);
-        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
+//        rsaDCipherPrivate.init(Cipher.DECRYPT_MODE, privateKey);
 
 
 
@@ -196,10 +212,22 @@ public class Server implements Runnable {
         }
 
         //TODO: Initialise file transfer requirements - Private and public keys
+        // Generate keypair here
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+        keyGen.initialize(1024);
+        KeyPair keyPair = keyGen.generateKeyPair();
+        Key serverPublicKey = keyPair.getPublic();
+        Key serverPrivateKey = keyPair.getPrivate();
+
+        // Send client my public key
+        sendMsg(out,Base64.getEncoder().encodeToString(serverPublicKey.getEncoded()));
 
         // "Waiting for encrypted AES Key from client"
         String AESKeyString = in.readLine();
-        Key AESKey = getAESKey(AESKeyString,rsaDCipherPrivate);
+        final Cipher serverPublicDCipher = Cipher.getInstance("RSA/ECB/PKCS1PAdding");
+        serverPublicDCipher.init(Cipher.DECRYPT_MODE, serverPrivateKey);
+
+        Key AESKey = getAESKey(AESKeyString,serverPublicDCipher);
 
         Cipher AESCipher = Cipher.getInstance("AES");
         AESCipher.init(Cipher.DECRYPT_MODE, AESKey);

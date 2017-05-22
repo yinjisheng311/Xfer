@@ -71,9 +71,11 @@ import java.net.SocketAddress;
 public class TestServer{
     public static void main(String[] args) throws Exception {
         System.out.println("Starting...");
-        SocketAddress SA = new InetSocketAddress("10.143.9.169", 3451);
-        Socket s = new Socket();
-        s.connect(SA,8080);
+//        SocketAddress SA = new InetSocketAddress("10.143.9.169", 3451);
+//        Socket s = new Socket();
+//        s.connect(SA,8080);
+        String hostname = "192.168.1.41";
+        Socket s = new Socket(hostname,7777);
         System.out.println("Connected");
     }
 }

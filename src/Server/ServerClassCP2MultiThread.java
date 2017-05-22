@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -302,7 +303,7 @@ public class ServerClassCP2MultiThread implements Runnable {
 		//String hostName = args[0];
 //		int portNum = Integer.parseInt(args[0]);
 		
-		int portNum = 7777;	// socket address
+		int portNum = 6667;	// socket address
 		ServerSocket serverSocket;		
 		serverSocket = new ServerSocket(portNum);
 		
@@ -310,6 +311,7 @@ public class ServerClassCP2MultiThread implements Runnable {
 		
 		while(true){
 			System.out.println("Accepting client connections now ...");
+			System.out.println(InetAddress.getLocalHost());
 			final Socket clientSocket = serverSocket.accept();
 			System.out.println("Client connection established!");
 			Runnable OpenConnections = new Runnable(){

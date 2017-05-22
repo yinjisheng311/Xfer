@@ -1,6 +1,7 @@
 package Server;
 
 import Client.CP2Client;
+import Client.Client;
 
 /**
  * Created by nicholas on 21-May-17.
@@ -8,10 +9,16 @@ import Client.CP2Client;
 public class TestServerClient {
 
     public static void main(String[] args) {
-        Runnable server = new ServerClassCP2MultiThread();
-        Runnable client = new CP2Client();
+//        Runnable server = new ServerClassCP2MultiThread();
+//        Runnable client = new CP2Client();
 
 //        new Thread(server).start();
+//        new Thread(client).start();
+
+        Runnable server = new Server();
+        Runnable client = new Client("user", "user");
+
+        new Thread(server).start();
         new Thread(client).start();
     }
 }

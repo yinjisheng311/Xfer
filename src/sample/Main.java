@@ -1,6 +1,7 @@
 package sample;
 
 import Server.BackgroundFireBase;
+import Server.UserInfo;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Application;
@@ -52,6 +53,11 @@ public class Main extends Application {
         window.setTitle("Xfer Without Trudy");
         window.setScene(new Scene(root, 600,400));
         window.show();
+        window.setOnCloseRequest(event -> {
+            BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+//            firebaseSingleton.setOffline(UserInfo.getInstance().getUser());
+            System.out.println("Stage is closing");
+        });
 
         // to make firebase load first
         kickstartFirebase();

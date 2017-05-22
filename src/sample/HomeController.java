@@ -163,6 +163,7 @@ public class HomeController implements Initializable {
     public void receiveFiles(){;
         Runnable server = new Server();
         new Thread(server).start();
+        sendRequestPopup();
     }
 
     public void sendRequestPopup(){
@@ -174,9 +175,9 @@ public class HomeController implements Initializable {
         JFXButton button = new JFXButton("Okay");
         JFXButton button2 = new JFXButton("No thanks");
         boolean[] proceed = new boolean[1];
-
-//        button2.setStyle("-fx-background-color: blue");
-
+//
+//        button2.setStyle("-fx-background-color: red");
+//        button2.setStyle("-fx-text-fill: white");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -195,10 +196,27 @@ public class HomeController implements Initializable {
         content.setActions(button, button2);
         dialog.show();
     }
+    public void refresh(){
+        BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
 
+        this.listView.getItems().clear();
+        // creating a deep copy of the firebase list
+        Map<String, String> firebaseCopy = new HashMap<>(firebaseSingleton.onlineUsers);
 
+        Iterator it = firebaseCopy.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            System.out.println(pair.getKey() + " = " + pair.getValue());
+            try {
+                Label lbl = new Label(pair.getKey().toString() + ": " + pair.getValue().toString());
+                this.listView.getItems().add(lbl);
+                it.remove();
 
-
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 }

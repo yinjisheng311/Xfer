@@ -60,11 +60,11 @@
                </image>
             </ImageView>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <JFXButton onAction="#sendFiles" prefWidth="100.0" style="-fx-background-color: #4fba6f;" text="Send">
+            <JFXButton onAction="#sendFiles" prefWidth="120.0" style="-fx-background-color: #4fba6f;" text="Send" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin></JFXButton>
-            <JFXButton fx:id="homeButton" alignment="CENTER" prefWidth="100.0" style="-fx-background-color: #868e8d;" text="Home">
+            <JFXButton fx:id="homeButton" alignment="CENTER" prefWidth="120.0" style="-fx-background-color: #868e8d;" text="Home" textFill="WHITE">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin></JFXButton>

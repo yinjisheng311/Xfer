@@ -173,6 +173,9 @@ public class HomeController implements Initializable {
         JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
         JFXButton button = new JFXButton("Okay");
         JFXButton button2 = new JFXButton("No thanks");
+
+//        button2.setStyle("-fx-background-color: blue");
+
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -185,8 +188,7 @@ public class HomeController implements Initializable {
                 dialog.close();
             }
         });
-        content.setActions(button);
-        content.setActions(button2);
+        content.setActions(button, button2);
         dialog.show();
 
 

@@ -9,12 +9,10 @@ Nicholas Yeow Teng Mun (1001490)
 Yin Ji Sheng (1001670)
 
 ## Graphical User Interface (GUI):
-This application's GUI was created using JavaFx, along with JFoenix's Material Design library. Below are a few screenshots of the application:
+This application's GUI was created using JavaFx, along with JFoenix's Material Design library. All of the pages are designed to be change dynamically with window sizes. Below are a few screenshots of the application:
 ![Login Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.35.53%20PM.png "Login Page")
 ![Home Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.38%20PM.png "Home Page")
 ![Send File Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.23%20PM.png "Send File Page")
-
-All of the pages are designed to be change dynamically with window sizes.
 
 ## Specifications of the Protocols:
 This program is split into two main parts, ensuring authentication and confidentality. The first part of the protocol will authenticate both the server to the client, and vice-versa. This will make sure both of them are the intended sender and recipient. After authentication, the next objective would be to securely transmit a file from the client to the authenticated server. This is done via encryption, where the client will send an encrypted file to the authenticated server. Below is a sample Authentication Protocol to be implemented, as given in the handout. 
@@ -44,38 +42,6 @@ To compare the performance between the 2 different confidentiality protocols,the
 
 ## How to Compile the program on Intellij IDEA:
 To compile the program on Intellij IDEA, one should have two different machines with an active Internet connection. Before running the program, one must configure the I.P address to which the client will attempt to connect to the server. This parameters are parsed to the client and server programs via the command line. This can either be done in Eclipse or via the Command line. 
-
-### Client Side configuration
-
-The input to the run configurations should be in the following order: 
-1) hostName 
-2) portNumber 
-3) path to files to be transferred
-
-```
-<HostName> <PortNumber> <PathsFilesToTransferred,SeparatedBySpaces>
-```
-
-Below is an example of how the run configuration should look like when running the client from Eclipse:
-```
-"10.12.21.29" "7777" "smallFile.txt" "medianFile.txt" "largeFile.txt" ...
-```
-
-### Server Side Configuration
-
-The input to the run configurations should be in the following order: 
-1) PortNumber to listen on 
-2) Path to Servers private Key
-3) Path to Servers Signed Certificate
-
-```
-<PortNumber> <PathToPrivateKey> <PathToSignedCertificate>
-```
-
-Below is an example of how the run configuration should look like when running the client from Eclipse:
-```
-"7777" "ServerPrivateKey.der" "ServerSignedCertifcate.crt"
-```
 
 ### Things to note when running the program
 

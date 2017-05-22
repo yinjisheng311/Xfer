@@ -28,17 +28,17 @@ This application's GUI was created using JavaFx, along with JFoenix's Material D
 1. Login with a registered username and password. (Use "user" as username and "user" as password) If login is successful, you will be brought to the Home Page, where all the currently online users are displayed.
 2. Here at the Home Page, you will wait for a popup that asks you if you want to receive files from another user. If you click yes, the files will be downloaded.
 
-## Specifications of the Protocols:
-This program is split into two main parts, ensuring authentication and confidentality. The first part of the protocol will authenticate both the server to the client, and vice-versa. This will make sure both of them are the intended sender and recipient. After authentication, the next objective would be to securely transmit a file from the client to the authenticated server. This is done via encryption, where the client will send an encrypted file to the authenticated server. Below is a sample Authentication Protocol to be implemented, as given in the handout. 
+## Specifications of the OLD Protocols:
+This program is split into two main parts, ensuring authentication and confidentality. The first part of the protocol will authenticate both the server to the client, and vice-versa. This will make sure both of them are the intended sender and recipient. After authentication, the next objective would be to securely transmit a file from the client to the authenticated server. This is done via encryption, where the client will send an encrypted file to the authenticated server. Below is a sample Authentication Protocol that was implemented before this competition, as given in the handout previously. 
 
 ![Sample AP](https://github.com/imny94/CSE-Programming-Assignments/blob/master/CSE-Programming-Assignment-2/Screen%20Shot%202017-04-20%20at%2012.09.11%20PM.png "Sample Authentication Protocol")
 
-However, this Protocol is not ideal, as there is the possibility of a playback attack being carried out on the Client. Additionally, the Identity of the client is not verified by the server, and the client in this protocol can easily spoof ones identity. These issues are fixed in our implementation of our Authentication Protocol.
+However, this Protocol is not ideal, as there is the possibility of a playback attack being carried out on the Client. Additionally, the Identity of the client is not verified by the server, and the client in this protocol can easily spoof ones identity. These issues were fixed in our implementation of our Authentication Protocol prior to the making of this application.
 
-Our Authentication Protocol (AP) and Confidentiality Protocol (CP) are outlined below. 
+Our Authentication Protocol (AP) and Confidentiality Protocol (CP) from before are outlined below. 
 
 ### Authentication Protocol (AP) 
-Our Authentication Protocol utilises asymmetric key cryptography to authenticate the identity of both the server and the client. To prevent playback attacks, a nonce request is first sent from the client to the server, and then the server will encrypt the nonce message with its own private key before sending it back to the client. The client will then request for the server's signed certificate to decrypt the encrypted nonce reply from the server. If the decrypted reply from the server matches the nonce initially transmitted by the client to the server, the client can be assured of both the identity of the server, as affirmed by the trusted certification authority, and the absence of a playback attack. This procedure is then repeated by the server to authenticate the identity of the client as well. Below is a chart to describe the AP. 
+Our previous Authentication Protocol utilises asymmetric key cryptography to authenticate the identity of both the server and the client. To prevent playback attacks, a nonce request is first sent from the client to the server, and then the server will encrypt the nonce message with its own private key before sending it back to the client. The client will then request for the server's signed certificate to decrypt the encrypted nonce reply from the server. If the decrypted reply from the server matches the nonce initially transmitted by the client to the server, the client can be assured of both the identity of the server, as affirmed by the trusted certification authority, and the absence of a playback attack. This procedure is then repeated by the server to authenticate the identity of the client as well. Below is a chart to describe the AP. 
 
 ![alt text](https://github.com/imny94/CSE-Programming-Assignments/blob/master/CSE-Programming-Assignment-2/APFigure.001.jpeg "Logo Title Text 1")
 
@@ -54,11 +54,16 @@ CP2 implements symmetric key cryptography using AES.
 
 To compare the performance between the 2 different confidentiality protocols,their respective runtimes are computed and plotted in a graph to compare their speeds. The outcomes can be found at the last section of this page.  
 
+## The NEW Protocol
+- Use certificate to ensure authencity of app ... //TODO
+- Utilise AES Key for user login ... //TODO
+
+Confidentiality Protocol
+- Use CP2 ... //TODO
+
 ### Things to note when running the program
 
-To run the CP1 codes first, one should run the CP1Server.java first on one computer before the other computer can run the CP1Client.java. If the client computer fails to connect to the correct server within 8080ms, the program will throw an timeout error. Both programs should run automatically until the end without errors. 
-
-The steps above hold for files implementing both CP1 and CP2.
+Both the server and client must be connected to the same network with this current version. Port forwarding has yet to be implemented. ><
 
 Note that the server will receive the encrypted file, decrypt it and save it on its own local computer.
 

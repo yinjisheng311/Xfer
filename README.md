@@ -1,7 +1,7 @@
 # CSE-Design-Competition
 
 ## Description:
-This was for the 50.005 Computer Systems Engineering Design Competition at Singapore University of Technology and Design. The aim of this competition is to implement a secure file transfer, along with any additional features, such as Graphic User Interface (GUI) and more. In this competition, we have created a secure file sharing JAVAFx application that allows online users to share files with other online users. We incorporated Material Design to our GUI to improve the looks and usability. We have also utilised Firebase's servers to keep track of currently online users.  
+This was for the 50.005 Computer Systems Engineering Design Competition at Singapore University of Technology and Design. The aim of this competition is to implement a secure file transfer, along with any additional features, such as Graphic User Interface (GUI) and more. In this competition, we have created a secure file sharing JavaFx application that allows online users to share files with other online users. We incorporated Material Design to our GUI to improve the looks and usability. We have also utilised Firebase to keep track of currently online users.  
 
 ### Collaborators:
 Nicholas Yeow Teng Mun (1001490)
@@ -76,4 +76,10 @@ To run the CP1 codes first, one should run the CP1Server.java first on one compu
 The steps above hold for files implementing both CP1 and CP2.
 
 Note that the server will receive the encrypted file, decrypt it and save it on its own local computer.
+
+### Acknowledgements:
+A large part of this application has incorporated many components used from JFoenix's JavaFx Material Design library. Below is the github link to the library:
+```
+https://github.com/jfoenixadmin/JFoenix
+```
 

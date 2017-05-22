@@ -226,6 +226,24 @@ public class LoginController implements Initializable {
             String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
             System.out.println(base64format);
             BackgroundFireBase.getInstance().createUser(username.getText(),base64format);
+
+            JFXDialogLayout content = new JFXDialogLayout();
+            content.setHeading(new Text("User created"));
+            content.setBody(new Text("Your account: "+ this.username.getText() + " has been successfully created"));
+            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+            JFXButton button = new JFXButton("Okay");
+            button.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    dialog.close();
+
+                }
+            });
+            content.setActions(button);
+            dialog.show();
+            this.username.clear();
+            this.password.clear();
+
         }
     }
 

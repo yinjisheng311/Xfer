@@ -230,7 +230,7 @@ public class BackgroundFireBase{
 //    }
 
     public void createUser(String user, String base64format) throws UnknownHostException {
-        ref.child("/"+user).setValue(new User(true,user,base64format));
+        ref.child("/"+user).setValue(new User(true,InetAddress.getLocalHost().toString().split("/")[1],base64format));
     }
 
 }

@@ -74,8 +74,8 @@ public class TestServer{
 //        SocketAddress SA = new InetSocketAddress("10.143.9.169", 3451);
 //        Socket s = new Socket();
 //        s.connect(SA,8080);
-        String hostname = "192.168.1.41";
-        Socket s = new Socket(hostname,7777);
+        String hostname = "10.143.9.169";
+        Socket s = new Socket(hostname,6667);
         System.out.println("Connected");
     }
 }

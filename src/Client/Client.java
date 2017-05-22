@@ -57,7 +57,7 @@ public class Client implements Runnable {
         System.out.println("CP2: trying to connect");
 //        String hostName = "10.12.21.29";
 //        String hostName = "localhost";
-        int portNumber = 7777;
+        int portNumber = 6667;
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
         Socket echoSocket = new Socket();
@@ -75,7 +75,7 @@ public class Client implements Runnable {
         String serverAccept = in.readLine();
         // TODO: handle server response
         // Send response to user if the server denys connection and stop client
-        if(!serverAccept.equals("")){
+        if(serverAccept.equals("")){
             return;
         }
 

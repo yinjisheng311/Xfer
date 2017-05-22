@@ -2,6 +2,7 @@ package sample;
 
 import Server.BackgroundFireBase;
 import Server.Server;
+import Server.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -31,7 +32,7 @@ import java.util.ResourceBundle;
 public class HomeController implements Initializable {
 
     @FXML
-    private StackPane stackPane;
+    private static StackPane stackPane;
 
     @FXML
     private ListView<Label> listView;
@@ -120,6 +121,8 @@ public class HomeController implements Initializable {
     public void goToLoginScene() throws IOException {
         //TODO: logs the user out of the firebase as well
 
+//        BackgroundFireBase.getInstance().offline(UserInfo.getInstance().getUser());
+        UserInfo.getInstance().resetInstance();
 
         Parent login_page_parent = FXMLLoader.load(getClass().getResource("login.fxml"));
         Scene login_page_scene = new Scene(login_page_parent);
@@ -166,11 +169,12 @@ public class HomeController implements Initializable {
         sendRequestPopup();
     }
 
-    public void sendRequestPopup(){
+    public static boolean sendRequestPopup(){
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text("Send Request"));
         // TODO: make the name of the sender appear
-        content.setBody(new Text("Someone wants to send you files"));
+        Text[] bodyText = {new Text("Someone wants to send you files")};
+        content.setBody(bodyText);
         JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
         JFXButton button = new JFXButton("Okay");
         JFXButton button2 = new JFXButton("No thanks");
@@ -183,6 +187,8 @@ public class HomeController implements Initializable {
             public void handle(ActionEvent event) {
                 //TODO: continue with the rest of the procedure
                 proceed[0] = true;
+                bodyText[0] = new Text("Loading ...");
+                content.setBody();
 
             }
         });
@@ -195,6 +201,7 @@ public class HomeController implements Initializable {
         });
         content.setActions(button, button2);
         dialog.show();
+        return proceed[0];
     }
     public void refresh(){
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();

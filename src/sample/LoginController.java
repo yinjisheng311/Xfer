@@ -1,6 +1,7 @@
 package sample;
 
 import Server.BackgroundFireBase;
+import Server.FirebaseSetOnline;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +21,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.*;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.net.URL;
@@ -163,12 +165,67 @@ public class LoginController implements Initializable {
         }
 
         System.out.println("Finished authentication");
-        loginFirebase(username);
+        loginFirebase(username, base64format);
     }
 
-    private void loginFirebase(String username) throws UnknownHostException {
-        BackgroundFireBase instance = BackgroundFireBase.getInstance();
-        instance.setOnline(username);
+    private void loginFirebase(String username, String base64format) throws UnknownHostException {
+//        BackgroundFireBase instance = BackgroundFireBase.getInstance();
+//        instance.online(username, base64format);
+//        FirebaseSetOnline temp = new FirebaseSetOnline(username);
+//        temp.setOnline();
+        // TODO: DO THIS!
+        BackgroundFireBase.getInstance().createUser(username,base64format);
+    }
+
+    @FXML
+    void createUser(ActionEvent event) throws UnknownHostException {
+        if(BackgroundFireBase.getInstance().userList.contains(username)){
+            //AES the password
+            // Generate the secret key specs.
+            byte[] user = this.username.getText().getBytes();
+            byte[] key = this.password.getText().getBytes();
+            MessageDigest sha = null;
+            try {
+                sha = MessageDigest.getInstance("SHA-1");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+
+            user = sha.digest(user);
+            user = Arrays.copyOf(user, 16);
+
+
+            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+            // Instantiate the cipher
+            Cipher cipher = null;
+            try {
+                cipher = Cipher.getInstance("AES");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (NoSuchPaddingException e) {
+                e.printStackTrace();
+            }
+            try {
+                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+            } catch (InvalidKeyException e) {
+                e.printStackTrace();
+            }
+
+            // Encrypt the username using the hashed password AES key
+            byte[] encryptedBytes = new byte[0];
+            try {
+                encryptedBytes = cipher.doFinal(user);
+            } catch (IllegalBlockSizeException e) {
+                e.printStackTrace();
+            } catch (BadPaddingException e) {
+                e.printStackTrace();
+            }
+            String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
+            System.out.println(base64format);
+            BackgroundFireBase.getInstance().createUser(username.getText(),base64format);
+        }
     }
 
     @Override

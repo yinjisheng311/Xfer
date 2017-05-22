@@ -54,8 +54,9 @@ public class Main extends Application {
         window.setScene(new Scene(root, 600,400));
         window.show();
         window.setOnCloseRequest(event -> {
-            BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
-//            firebaseSingleton.setOffline(UserInfo.getInstance().getUser());
+            //TODO: Change this!
+//            BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
+//            firebaseSingleton.offline(UserInfo.getInstance().getUser());
             System.out.println("Stage is closing");
         });
 

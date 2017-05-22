@@ -76,6 +76,7 @@ public class Client implements Runnable {
         // TODO: handle server response
         // Send response to user if the server denys connection and stop client
         if(serverAccept.equals("")){
+            System.out.println("Server rejected connection!");
             return;
         }
 

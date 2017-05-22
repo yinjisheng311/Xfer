@@ -6,6 +6,7 @@ package Server;
 
 import AuthenticationConstants.ACs;
 import CSV.CSVUtils;
+import sample.HomeController;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
@@ -204,8 +205,7 @@ public class Server implements Runnable {
         // Read in client's ID
         String clientID = in.readLine();
         // TODO: Prompt the user if they want to accept the files
-        boolean accept;
-        accept = true;
+        boolean accept = HomeController.sendRequestPopup();
         if(!accept){
             sendMsg(out,"");
             System.out.println("User rejected transfer!");

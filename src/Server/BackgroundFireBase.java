@@ -25,6 +25,7 @@ import java.util.concurrent.RunnableFuture;
 public class BackgroundFireBase{
 
     public final Map<String,String> onlineUsers = new HashMap<>();
+    public final Set<String> userList = new HashSet<>();
     public static int numReferences;
 
 //    private final DatabaseReference ref = FirebaseDatabase
@@ -72,16 +73,13 @@ public class BackgroundFireBase{
 
 //        onlineUsers = new HashMap<String,String>();
 
-        ref = FirebaseDatabase
-                        .getInstance()
-                        .getReference("/");
-
         ref.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 System.out.println("Child Added");
                 HashMap userHandle = (HashMap) dataSnapshot.getValue();
+                userList.add(dataSnapshot.getKey());
                 if((boolean) userHandle.get("Online")){
                     System.out.println("Added newly added child");
                     onlineUsers.put(dataSnapshot.getKey(),(String) userHandle.get("IPAddress"));
@@ -200,22 +198,39 @@ public class BackgroundFireBase{
         return PubPriv;
     }
 
-    public void setOnline(String user) throws UnknownHostException {
-        DatabaseReference userRef = ref.child(user);
-        Map<String, Object> userUpdates = new HashMap<String, Object>();
-        userUpdates.put("IPAddress", InetAddress.getLocalHost());
-        userUpdates.put("Online",true);
+//    public void offline(String username){
+//
+//    }
+//    public void online(String username, String base64format) throws UnknownHostException {
+//        Map<String, Object> userUpdates = new HashMap<String, Object>();
+//        userUpdates.put("IPAddress", InetAddress.getLocalHost());
+//        userUpdates.put("Online",true);
+////
+//        ref.child(username).updateChildren(userUpdates);
+//    }
+//
+//    private void setOnline(String user, String base64format) throws UnknownHostException {
+////        DatabaseReference userRef = ref.child(user);
+////        Map<String, Object> userUpdates = new HashMap<String, Object>();
+////        userUpdates.put("IPAddress", InetAddress.getLocalHost());
+////        userUpdates.put("Online",true);
+////
+////        ref.child(user).updateChildren(userUpdates);
+//
+//        ref.child(user).setValue(new User(true,user,base64format));
+//    }
+//
+//    private void setOffline(String user){
+////        DatabaseReference userRef = ref.child(user);
+////        Map<String, Object> userUpdates = new HashMap<String, Object>();
+////        userUpdates.put("IPAddress", "null");
+////        userUpdates.put("Online",false);
+////
+////        ref.child(user).updateChildren(userUpdates);
+//    }
 
-        userRef.updateChildren(userUpdates);
-    }
-
-    public void setOffline(String user){
-        DatabaseReference userRef = ref.child(user);
-        Map<String, Object> userUpdates = new HashMap<String, Object>();
-        userUpdates.put("IPAddress", "null");
-        userUpdates.put("Online",false);
-
-        userRef.updateChildren(userUpdates);
+    public void createUser(String user, String base64format) throws UnknownHostException {
+        ref.child("/"+user).setValue(new User(true,user,base64format));
     }
 
 }

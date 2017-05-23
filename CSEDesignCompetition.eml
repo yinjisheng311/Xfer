@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" jdk="1.8" jdk_type="JavaSDK">
+	<output-test url="file://$MODULE_DIR$/out/test/CSEDesignCompetition"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="jfoenix.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/jfoenix.jar!/"/>
+	</lib>
+	<levels>
+		<level name="Gradle: com.google.firebase:firebase-admin:4.1.7" value="project"/>
+		<level name="Gradle: com.google.api-client:google-api-client:1.22.0" value="project"/>
+		<level name="Gradle: com.google.http-client:google-http-client:1.22.0" value="project"/>
+		<level name="Gradle: com.google.http-client:google-http-client-jackson2:1.22.0" value="project"/>
+	</levels>
+</component>

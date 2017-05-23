@@ -18,6 +18,11 @@ This application's GUI was created using JavaFx, along with JFoenix's Material D
 ![Home Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.38%20PM.png "Home Page")
 ![Send File Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.23%20PM.png "Send File Page")
 
+## How to Create User:
+1. At the Login Page, click on "Sign Up", and you will be brought to the Sign Up Page.
+2. Enter your preferred username and password. Both must at least be 6 characters long. If it is successul, a popup will appear saying you have succeeded in creating a new user.
+3. Upon clicking "OK" on the popup, you will be brought back to the Login Page (Clicking "Cancel" can also bring you back to the Login Page). There, you can sign up with your newly created user. 
+
 ## How to Send:
 1. Login with a registered username and password. (Use "user" as username and "user" as password) If login is successful, you will be brought to the Home Page, where all the currently online users are displayed.
 2. Click on the user that you intend to send the file to and you will be brought to the Send File Page.

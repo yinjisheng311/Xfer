@@ -178,73 +178,78 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void createUser(ActionEvent event) throws UnknownHostException {
+    void createUser(ActionEvent event) throws IOException {
         System.out.println("CREATE USER!!!!!");
-        if(!BackgroundFireBase.getInstance().userList.contains(username)){
-            //AES the password
-            // Generate the secret key specs.
-            byte[] user = this.username.getText().getBytes();
-            byte[] key = this.password.getText().getBytes();
-            MessageDigest sha = null;
-            try {
-                sha = MessageDigest.getInstance("SHA-1");
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            }
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-
-            user = sha.digest(user);
-            user = Arrays.copyOf(user, 16);
-
-
-            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-            // Instantiate the cipher
-            Cipher cipher = null;
-            try {
-                cipher = Cipher.getInstance("AES");
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            }
-            try {
-                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-            }
-
-            // Encrypt the username using the hashed password AES key
-            byte[] encryptedBytes = new byte[0];
-            try {
-                encryptedBytes = cipher.doFinal(user);
-            } catch (IllegalBlockSizeException e) {
-                e.printStackTrace();
-            } catch (BadPaddingException e) {
-                e.printStackTrace();
-            }
-            String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
-            System.out.println(base64format);
-            BackgroundFireBase.getInstance().createUser(username.getText(),base64format);
-
-            JFXDialogLayout content = new JFXDialogLayout();
-            content.setHeading(new Text("User created"));
-            content.setBody(new Text("Your account: "+ this.username.getText() + " has been successfully created"));
-            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-            JFXButton button = new JFXButton("Okay");
-            button.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    dialog.close();
-
-                }
-            });
-            content.setActions(button);
-            dialog.show();
-            this.username.clear();
-            this.password.clear();
-
-        }
+        Parent signup_page_parent = FXMLLoader.load(getClass().getResource("signup.fxml"));
+        Scene signup_page_scene = new Scene(signup_page_parent);
+        Stage app_stage = (Stage) this.username.getScene().getWindow();
+        app_stage.setScene(signup_page_scene);
+        app_stage.show();
+//        if(!BackgroundFireBase.getInstance().userList.contains(username)){
+//            //AES the password
+//            // Generate the secret key specs.
+//            byte[] user = this.username.getText().getBytes();
+//            byte[] key = this.password.getText().getBytes();
+//            MessageDigest sha = null;
+//            try {
+//                sha = MessageDigest.getInstance("SHA-1");
+//            } catch (NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            }
+//            key = sha.digest(key);
+//            key = Arrays.copyOf(key, 16);
+//
+//            user = sha.digest(user);
+//            user = Arrays.copyOf(user, 16);
+//
+//
+//            SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+//            // Instantiate the cipher
+//            Cipher cipher = null;
+//            try {
+//                cipher = Cipher.getInstance("AES");
+//            } catch (NoSuchAlgorithmException e) {
+//                e.printStackTrace();
+//            } catch (NoSuchPaddingException e) {
+//                e.printStackTrace();
+//            }
+//            try {
+//                cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+//            } catch (InvalidKeyException e) {
+//                e.printStackTrace();
+//            }
+//
+//            // Encrypt the username using the hashed password AES key
+//            byte[] encryptedBytes = new byte[0];
+//            try {
+//                encryptedBytes = cipher.doFinal(user);
+//            } catch (IllegalBlockSizeException e) {
+//                e.printStackTrace();
+//            } catch (BadPaddingException e) {
+//                e.printStackTrace();
+//            }
+//            String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
+//            System.out.println(base64format);
+//            BackgroundFireBase.getInstance().createUser(username.getText(),base64format);
+//
+//            JFXDialogLayout content = new JFXDialogLayout();
+//            content.setHeading(new Text("User created"));
+//            content.setBody(new Text("Your account: "+ this.username.getText() + " has been successfully created"));
+//            JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+//            JFXButton button = new JFXButton("Okay");
+//            button.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent event) {
+//                    dialog.close();
+//
+//                }
+//            });
+//            content.setActions(button);
+//            dialog.show();
+//            this.username.clear();
+//            this.password.clear();
+//
+//        }
     }
 
     @Override

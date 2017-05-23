@@ -59,7 +59,7 @@
                   <Image url="@upload.png" />
                </image>
             </ImageView>
-            <Region prefHeight="200.0" prefWidth="200.0" />
+            <Region prefHeight="200.0" prefWidth="400.0" />
             <JFXButton onAction="#sendFiles" prefWidth="120.0" style="-fx-background-color: #4fba6f;" text="Send" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="10.0" />

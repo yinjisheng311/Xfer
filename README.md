@@ -14,6 +14,7 @@ On Intellij, run the Main.java file and the application should load. While loadi
 ## Graphical User Interface (GUI):
 This application's GUI was created using JavaFx, along with JFoenix's Material Design library. All of the pages are designed to be change dynamically with window sizes. Below are a few screenshots of the application:
 
+![Sign Up Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-23%20at%2010.50.32%20PM.png "Sign Up Page")
 ![Login Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.35.53%20PM.png "Login Page")
 ![Home Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.38%20PM.png "Home Page")
 ![Send File Page](https://github.com/yinjisheng311/CSE-Design-Competition/blob/master/src/Screenshots/Screen%20Shot%202017-05-22%20at%2010.39.23%20PM.png "Send File Page")

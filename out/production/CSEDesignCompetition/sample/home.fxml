@@ -45,6 +45,7 @@
          <children>
             <VBox alignment="TOP_CENTER">
                <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
                   <Label text="X F E R" textFill="WHITE">
                      <font>
                         <Font size="48.0" />
@@ -60,11 +61,7 @@
                   </Label>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label text="Status: Available" textFill="WHITE">
-                           <HBox.margin>
-                              <Insets left="15.0" right="15.0" />
-                           </HBox.margin>
-                        </Label>
+                        <JFXToggleButton fx:id="toggle" onAction="#startServer" text="Ready to receive" textFill="WHITE" unToggleLineColor="WHITE" />
                         <Region HBox.hgrow="ALWAYS" />
                         <JFXButton onAction="#refresh" prefWidth="70.0" style="-fx-background-color: grey;" text="Refresh" textFill="WHITE">
                            <HBox.margin>

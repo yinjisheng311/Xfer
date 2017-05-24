@@ -2,10 +2,8 @@
 <component LANGUAGE_LEVEL="JDK_1_8" inheritJdk="true">
 	<output-test url="file://$MODULE_DIR$/../../Gradle/build/classes/test"/>
 	<exclude-output/>
-	<contentEntry url="file://$MODULE_DIR$/../../Gradle/src/test">
-		<testFolder url="file://$MODULE_DIR$/../../Gradle/src/test/java"/>
-		<testFolder url="file://$MODULE_DIR$/../../Gradle/src/test/resources"/>
-	</contentEntry>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<contentEntry url="file://$MODULE_DIR$/../../Gradle/src/test"/>
 	<levels>
 		<level name="Gradle: com.google.firebase:firebase-admin:4.1.7" value="project"/>
 		<level name="Gradle: junit:junit:4.12" value="project"/>

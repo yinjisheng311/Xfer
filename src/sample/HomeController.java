@@ -6,6 +6,7 @@ import Server.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXToggleButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -36,6 +37,10 @@ public class HomeController implements Initializable {
 
     @FXML
     private ListView<Label> listView;
+
+    @FXML
+
+    private JFXToggleButton toggle;
 
     public static String enteredUser;
 
@@ -164,8 +169,8 @@ public class HomeController implements Initializable {
     }
 
     public void receiveFiles(){
-        Runnable server = new Server();
-        new Thread(server).start();
+//        Runnable server = new Server();
+//        new Thread(server).start();
         sendRequestPopup();
     }
 
@@ -222,6 +227,22 @@ public class HomeController implements Initializable {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void startServer() throws Exception {
+
+        if (this.toggle.isSelected()){
+            this.toggle.setText("Accepting files");
+            System.out.println("1");
+            String[] whatever = {""};
+            Server.main(whatever);
+            System.out.println("This should be done");
+            this.toggle.setSelected(false);
+
+        } else {
+            this.toggle.setText("CLick to accept files");
+            System.out.println("2");
         }
     }
 

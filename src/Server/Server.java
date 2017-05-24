@@ -33,7 +33,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
-public class Server implements Runnable {
+public class Server {
 
     private static boolean sendMsg(PrintWriter out, String msg){
         out.println(msg);
@@ -179,8 +179,8 @@ public class Server implements Runnable {
     }
 
     protected static void handleRequest(Socket clientSocket) throws Exception{
-        final String privateKeyFileName = "D:\\Backup\\SUTD\\ISTD\\Computer Systems Engineering\\CSE-Programming-Assignments\\CSE-Programming-Assignment-2\\privateServerNic.der";
-        final String serverCertPath = "D:\\Backup\\SUTD\\ISTD\\Computer Systems Engineering\\CSE-Programming-Assignments\\CSE-Programming-Assignment-2\\1001490.crt";
+        final String privateKeyFileName = "src/Server/privateServerNic.der";
+        final String serverCertPath = "src/Server/1001490.crt";
         final Path keyPath = Paths.get(privateKeyFileName);
         final byte[] privateKeyByteArray = Files.readAllBytes(keyPath);
         final PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKeyByteArray);
@@ -205,12 +205,12 @@ public class Server implements Runnable {
         // Read in client's ID
         String clientID = in.readLine();
         // TODO: Prompt the user if they want to accept the files
-        boolean accept = HomeController.sendRequestPopup();
-        if(!accept){
-            sendMsg(out,"");
-            System.out.println("User rejected transfer!");
-            return;
-        }
+//        boolean accept = HomeController.sendRequestPopup();
+//        if(!accept){
+//            sendMsg(out,"");
+//            System.out.println("User rejected transfer!");
+//            return;
+//        }
 
         sendMsg(out,"accept");
 
@@ -323,42 +323,45 @@ public class Server implements Runnable {
         fileUploadTimings.put(clientsFileName,System.currentTimeMillis()-startTime);
     }
 
-    private void main() throws Exception{
+    public static void main(String[] args) throws Exception{
 
-        int portNum = 6667;	// socket address
+        int portNum = 6666;	// socket address
         ServerSocket serverSocket;
         serverSocket = new ServerSocket(portNum);
-
+//        Socket clientSocket;
         final Executor exec = Executors.newCachedThreadPool();
-
-        while(true){
+        final boolean[] done = {false};
+        while(!done[0]){
             System.out.println("Accepting client connections now ...");
             final Socket clientSocket = serverSocket.accept();
             System.out.println("Client connection established!");
-            Runnable OpenConnections = new Runnable(){
-                public void run(){
-                    try {
-                        handleRequest(clientSocket);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-
-            exec.execute(OpenConnections);
+            handleRequest(clientSocket);
+            done[0] = true;
+//            Runnable OpenConnections = new Runnable(){
+//                public void run(){
+//                    try {
+//                        handleRequest(clientSocket);
+//                        done[0] = true;
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//
+//            exec.execute(OpenConnections);
         }
 
     }
 
 
-    @Override
-    public void run() {
-        try {
-            main();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public void run() {
+//        try {
+//            main();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 

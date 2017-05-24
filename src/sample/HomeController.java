@@ -170,31 +170,18 @@ public class HomeController implements Initializable {
 
     public void sendRequestPopup(){
         JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Send Request"));
+        content.setHeading(new Text("File Received"));
         // TODO: make the name of the sender appear
-        Text[] bodyText = {new Text("Someone wants to send you files")};
+        Text[] bodyText = {new Text("Someone has sent you files")};
         content.setBody(bodyText);
         dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton button = new JFXButton("Okay");
-        JFXButton button2 = new JFXButton("No thanks");
-
+        JFXButton button2 = new JFXButton("Okay");
         proceed[0] = true;
 //
 //        button2.setStyle("-fx-background-color: red");
 //        button2.setStyle("-fx-text-fill: white");
 //        Phaser phaser = new Phaser();
 //        phaser.bulkRegister(2);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //TODO: continue with the rest of the procedure
-                proceed[0] = true;
-                bodyText[0] = new Text("Loading ...");
-                content.setBody(bodyText);
-                proceed[1] = true;
-//                phaser.arriveAndDeregister();
-            }
-        });
         button2.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -204,19 +191,19 @@ public class HomeController implements Initializable {
 //                phaser.arriveAndDeregister();
             }
         });
-        content.setActions(button, button2);
+        content.setActions(button2);
         dialog.show();
 
     }
 
-
-
-
-    public void checkDialogHasPoppedUp(){
-//        dialog.
-        while(!proceed[1]){}
-
-    }
+//
+//
+//
+//    public void checkDialogHasPoppedUp(){
+////        dialog.
+//        while(!proceed[1]){}
+//
+//    }
 
     public boolean getProceed(){
         return this.proceed[0];

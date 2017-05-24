@@ -205,25 +205,21 @@ public class Server2 implements Runnable {
                         new DataInputStream(clientSocket.getInputStream())));
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
+
         // Read in client's ID
         String clientID = in.readLine();
         // TODO: Prompt the user if they want to accept the files
-        Phaser phaser2 = new Phaser();
-        phaser2.bulkRegister(2);
+        Phaser phaser3 = new Phaser();
+        phaser3.bulkRegister(2);
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 homeController.sendRequestPopup();
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 //                homeController.checkDialogHasPoppedUp();
-                phaser2.arrive();
+                phaser3.arrive();
             }
         });
-        phaser2.arriveAndAwaitAdvance();
+        phaser3.arriveAndAwaitAdvance();
 //        homeController.sendRequestPopup();
         boolean accept = homeController.getProceed();
         System.out.println(accept);

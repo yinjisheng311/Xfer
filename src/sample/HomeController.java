@@ -1,14 +1,16 @@
 package sample;
 
 import Server.BackgroundFireBase;
-import Server.Server;
+import Server.Server2;
 import Server.UserInfo;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
@@ -28,12 +31,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.Phaser;
 
 
 public class HomeController implements Initializable {
 
     @FXML
-    private static StackPane stackPane;
+    private StackPane stackPane;
 
     @FXML
     private ListView<Label> listView;
@@ -44,10 +48,13 @@ public class HomeController implements Initializable {
 
     public static String enteredUser;
 
+    private static boolean accept;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        receiveFiles();
+        accept = false;
+//        receiveFiles();
 
         enteredUser = "";
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
@@ -137,22 +144,6 @@ public class HomeController implements Initializable {
         app_stage.show();
     }
 
-    @FXML
-    void loadDialog(ActionEvent event) {
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Send Request"));
-        content.setBody(new Text("Someone wants to send you files"));
-        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton button = new JFXButton("Okay");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.close();
-            }
-        });
-        content.setActions(button);
-        dialog.show();
-    }
 
 
     // to fetch the list of all online users currently
@@ -167,34 +158,41 @@ public class HomeController implements Initializable {
         }
 
     }
+//
+//    public void receiveFiles(){
+////        Runnable server = new Server();
+////        new Thread(server).start();
+//        sendRequestPopup();
+//    }
 
-    public void receiveFiles(){
-//        Runnable server = new Server();
-//        new Thread(server).start();
-        sendRequestPopup();
-    }
+    JFXDialog dialog;
+    boolean[] proceed = new boolean[2];
 
-    public static boolean sendRequestPopup(){
+    public void sendRequestPopup(){
         JFXDialogLayout content = new JFXDialogLayout();
         content.setHeading(new Text("Send Request"));
         // TODO: make the name of the sender appear
         Text[] bodyText = {new Text("Someone wants to send you files")};
         content.setBody(bodyText);
-        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
+        dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.CENTER);
         JFXButton button = new JFXButton("Okay");
         JFXButton button2 = new JFXButton("No thanks");
-        boolean[] proceed = new boolean[1];
+
+        proceed[0] = true;
 //
 //        button2.setStyle("-fx-background-color: red");
 //        button2.setStyle("-fx-text-fill: white");
+//        Phaser phaser = new Phaser();
+//        phaser.bulkRegister(2);
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 //TODO: continue with the rest of the procedure
                 proceed[0] = true;
                 bodyText[0] = new Text("Loading ...");
-                content.setBody();
-
+                content.setBody(bodyText);
+                proceed[1] = true;
+//                phaser.arriveAndDeregister();
             }
         });
         button2.setOnAction(new EventHandler<ActionEvent>() {
@@ -202,12 +200,28 @@ public class HomeController implements Initializable {
             public void handle(ActionEvent event) {
                 dialog.close();
                 proceed[0] = false;
+                proceed[1] = true;
+//                phaser.arriveAndDeregister();
             }
         });
         content.setActions(button, button2);
         dialog.show();
-        return proceed[0];
+
     }
+
+
+
+
+    public void checkDialogHasPoppedUp(){
+//        dialog.
+        while(!proceed[1]){}
+
+    }
+
+    public boolean getProceed(){
+        return this.proceed[0];
+    }
+
     public void refresh(){
         BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
 
@@ -234,15 +248,15 @@ public class HomeController implements Initializable {
 
         if (this.toggle.isSelected()){
             this.toggle.setText("Accepting files");
-            System.out.println("1");
             String[] whatever = {""};
-            Server.main(whatever);
-            System.out.println("This should be done");
-            this.toggle.setSelected(false);
+            Runnable server = new Server2(this);
+            new Thread(server).start();
+
 
         } else {
-            this.toggle.setText("CLick to accept files");
-            System.out.println("2");
+            //TODO: close server socket
+
+            this.toggle.setText("Click to accept files");
         }
     }
 

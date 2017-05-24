@@ -57,7 +57,7 @@ public class Client implements Runnable {
         System.out.println("CP2: trying to connect");
 //        String hostName = "10.12.21.29";
 //        String hostName = "localhost";
-        int portNumber = 6667;
+        int portNumber = 6666;
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
         Socket echoSocket = new Socket();

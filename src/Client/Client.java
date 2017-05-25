@@ -61,8 +61,10 @@ public class Client implements Runnable {
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
         Socket echoSocket = new Socket();
+        System.out.println(hostName);
+        System.out.println(hostName.equals("10.12.145.110"));
         SocketAddress sockaddr = new InetSocketAddress(hostName, portNumber);
-        echoSocket.connect(sockaddr, 8080);
+        echoSocket.connect(sockaddr, 18080);
         System.out.println("connected");
         PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));

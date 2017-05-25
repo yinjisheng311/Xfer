@@ -2,13 +2,11 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="var" path="USER_HOME/Downloads/jfoenix.jar"/>
 	<classpathentry kind="lib" path="jfoenix.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.firebase:firebase-admin:4.1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.api-client:google-api-client:1.22.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.http-client:google-http-client:1.22.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.google.http-client:google-http-client-jackson2:1.22.0"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Gradle_main"/>
-	<classpathentry exported="true" kind="var" path="USER_HOME/Downloads/SmarterEditor-0.11.0.jar"/>
 	<classpathentry kind="output" path="out/production/CSEDesignCompetition"/>
 </classpath>

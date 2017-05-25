@@ -37,7 +37,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -149,20 +151,21 @@ public class SendFileController implements Initializable {
         app_stage.show();
     }
     @FXML
-    void sendFiles(ActionEvent event) {
+    void sendFiles(ActionEvent event) throws UnknownHostException {
         System.out.println(this.fileList.toString());
         // get files from fileList and send them out
 //        Runnable client = new CP2Client(this.fileList);
 //        Runnable client = new CP2Client(this.fileList);
-        String rawData = HomeController.enteredUser;
-        Pattern IPPattern = Pattern.compile("[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}$||localhost");
-        Matcher m = IPPattern.matcher(rawData);
-        String IPAddress = null;
-        while (m.find()){
-            IPAddress = m.group(0);
-            System.out.println("Inside loop, IPAddress is "+ IPAddress);
-        }
-        System.out.println("IPAddress is "+IPAddress);
+//        String rawData = HomeController.enteredUser;
+//        Pattern IPPattern = Pattern.compile("[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}.[\\d]{1,3}$||localhost");
+//        Matcher m = IPPattern.matcher(rawData);
+//        String IPAddress = null;
+//        while (m.find()){
+//            IPAddress = m.group(0);
+//            System.out.println("Inside loop, IPAddress is "+ IPAddress);
+//        }
+//        System.out.println("IPAddress is "+IPAddress);
+        String IPAddress = InetAddress.getLocalHost().getHostAddress();
         Runnable client = new Client(user,fileList,IPAddress);
         new Thread(client).start();
 

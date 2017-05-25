@@ -2,6 +2,7 @@ package sample;
 
 import Server.BackgroundFireBase;
 import Server.FirebaseSetOnline;
+import Server.UserInfo;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -166,6 +167,7 @@ public class LoginController implements Initializable {
 
         System.out.println("Finished authentication");
         loginFirebase(username, base64format);
+        UserInfo.getInstance().setUser(username);
     }
 
     private void loginFirebase(String username, String base64format) throws UnknownHostException {

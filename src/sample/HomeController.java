@@ -134,6 +134,7 @@ public class HomeController implements Initializable {
         //TODO: logs the user out of the firebase as well
 
 //        BackgroundFireBase.getInstance().offline(UserInfo.getInstance().getUser());
+        BackgroundFireBase.getInstance().GoOffline(UserInfo.getInstance().getUser());
         UserInfo.getInstance().resetInstance();
 
         Parent login_page_parent = FXMLLoader.load(getClass().getResource("login.fxml"));

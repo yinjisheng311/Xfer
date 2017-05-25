@@ -229,6 +229,14 @@ public class BackgroundFireBase{
 ////        ref.child(user).updateChildren(userUpdates);
 //    }
 
+    public void GoOffline(String user){
+        DatabaseReference userRef = ref.child(user);
+        Map<String, Object> userUpdates = new HashMap<>();
+        userUpdates.put("Online",false);
+
+        userRef.updateChildren(userUpdates);
+    }
+
     public void createUser(String user, String base64format) throws UnknownHostException {
         ref.child("/"+user).setValue(new User(true,InetAddress.getLocalHost().toString().split("/")[1],base64format));
     }

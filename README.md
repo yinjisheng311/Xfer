@@ -1,7 +1,7 @@
 # CSE-Design-Competition
 
 ## Usage
-Read latest commit for usage Rights! Future Revisions will be updated when possible!
+Read commit 49a5b8c4a7892ad0906b9674f25cef003f66c282 for usage instructions! Future Revisions will be updated when possible!
 
 ## Description:
 This was for the 50.005 Computer Systems Engineering Design Competition at Singapore University of Technology and Design. The aim of this competition is to implement a secure file transfer, along with any additional features, such as Graphical User Interface (GUI) and more. In this competition, we have created a secure file sharing JavaFx application that allows online users to share files with other online users. We incorporated Material Design to our GUI to improve the looks and usability. We have also utilised Firebase to keep track of currently online users.  

@@ -31,11 +31,13 @@ public class Client implements Runnable {
     public final String user;
     public final ArrayList<File> fileArrayList;
     public final String hostName;
+    private int port;
 
-    public Client(String user, ArrayList<File> fileArrayList, String hostName){
+    public Client(String user, ArrayList<File> fileArrayList, String hostName, int port){
         this.user = user;
         this.fileArrayList = fileArrayList;
         this.hostName = hostName;
+        this.port = port;
     }
 
     private static PublicKey getPublicKey(String key){
@@ -57,7 +59,8 @@ public class Client implements Runnable {
         System.out.println("CP2: trying to connect");
 //        String hostName = "10.12.21.29";
 //        String hostName = "localhost";
-        int portNumber = 6666;
+//        int portNumber = 6666;
+        int portNumber = port;
 //		String hostName = args[0];
 //		int portNumber = Integer.parseInt(args[1]);
         Socket echoSocket = new Socket();

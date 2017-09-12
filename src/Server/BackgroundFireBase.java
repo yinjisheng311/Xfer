@@ -53,6 +53,8 @@ public class BackgroundFireBase{
     private void start() {
         // Fetch the service account key JSON file contents
         FileInputStream serviceAccount = null;
+        serviceAccount = (FileInputStream) getClass().getResourceAsStream("D://Backup//SUTD//ISTD//Computer Systems Engineering//CSE-Design-Competition//src//Server//cse-design-competition-firebase-adminsdk-nj8bz-0f00554d8d.json");
+        System.out.println(System.getProperty("user.key"));
         try {
             serviceAccount = new FileInputStream("src//Server//cse-design-competition-firebase-adminsdk-nj8bz-0f00554d8d.json");
         } catch (FileNotFoundException e) {

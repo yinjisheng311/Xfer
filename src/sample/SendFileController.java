@@ -166,7 +166,7 @@ public class SendFileController implements Initializable {
 //        }
 //        System.out.println("IPAddress is "+IPAddress);
         String IPAddress = InetAddress.getLocalHost().getHostAddress();
-        Runnable client = new Client(user,fileList,IPAddress);
+        Runnable client = new Client(user,fileList,IPAddress,6666);
         new Thread(client).start();
 
     }

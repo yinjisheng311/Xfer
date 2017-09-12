@@ -331,7 +331,7 @@ public class Server2 implements Runnable {
         if(!directory.exists()){
             directory.mkdir();
         }
-        FileOutputStream fileOutput = new FileOutputStream("ReceivedFile\\"+temp[temp.length-1]);
+        FileOutputStream fileOutput = new FileOutputStream("ReceivedFile/"+temp[temp.length-1]);
         fileOutput.write(clientDecryptedFileBytes, 0, clientDecryptedFileBytes.length);
         fileOutput.close();
         System.out.println("Successfully saved client's file : "+clientsFileName);

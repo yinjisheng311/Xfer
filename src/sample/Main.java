@@ -48,6 +48,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         firebaseSingleton = BackgroundFireBase.getInstance();
+        System.out.println("fSingle : " + firebaseSingleton);
         window = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         window.setTitle("Xfer");
@@ -115,8 +116,9 @@ public class Main extends Application {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
+        System.out.println("e Bytes : " + encryptedBytes);
         String base64format = DatatypeConverter.printBase64Binary(encryptedBytes);
-        System.out.println(base64format);
+        System.out.println("b64 : " + base64format);
 
 
         String finalUsername = username;
@@ -127,8 +129,9 @@ public class Main extends Application {
 //                BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
                 String firebaseData = firebaseSingleton.Authenticate(finalUsername);
                 System.out.println("While kick starting firebase, firebase ref : "+firebaseSingleton.numReferences);
-
-                if (firebaseData.equals(base64format)){
+                System.out.println("b64 2 : " + base64format);
+                System.out.println("f data : " + firebaseData);
+                if (firebaseData == null || firebaseData.equals(base64format)){
                     System.out.println("succeeded");
                     authenticated[0] = true;
                 }

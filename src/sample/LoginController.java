@@ -118,7 +118,7 @@ public class LoginController implements Initializable {
                 BackgroundFireBase firebaseSingleton = BackgroundFireBase.getInstance();
                 String firebaseData = firebaseSingleton.Authenticate(finalUsername);
                 System.out.println("while creating firebase authentication thread, firebase ref : " + firebaseSingleton.numReferences);
-
+//                System.out.println(base64format);
                 if (firebaseData.equals(base64format)){
                     System.out.println("succeeded");
                     authenticated[0] = true;
